@@ -11,6 +11,8 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
+import org.apache.shiro.util.ThreadContext;
+import org.junit.After;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -136,5 +138,10 @@ public class LoginLogoutTest {
         subject.logout();
     }
 
+
+    @After
+    public void tearDown() throws Exception {
+        ThreadContext.unbindSubject();//退出时请解除绑定Subject到线程 否则对下次测试造成影响
+    }
 
 }
