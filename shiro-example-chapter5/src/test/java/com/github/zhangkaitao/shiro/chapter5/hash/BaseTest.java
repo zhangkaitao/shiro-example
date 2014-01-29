@@ -1,9 +1,8 @@
-package com.github.zhangkaitao.shiro.chapter3;
+package com.github.zhangkaitao.shiro.chapter5.hash;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.mgt.*;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
@@ -15,6 +14,7 @@ import org.junit.After;
  * <p>Version: 1.0
  */
 public abstract class BaseTest {
+
 
 
     @After

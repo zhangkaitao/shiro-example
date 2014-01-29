@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>shiro-example-chapter5</artifactId>
+    <artifactId>shiro-example-chapter6</artifactId>
 
 
     <dependencies>
@@ -41,6 +41,7 @@
             <version>0.2.23</version>
         </dependency>
 
+
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
@@ -48,7 +49,11 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.0.0.RELEASE</version>
+        </dependency>
+
     </dependencies>
-
-
 </project>
