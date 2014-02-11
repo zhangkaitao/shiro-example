@@ -8,8 +8,6 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 /**
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-28
