@@ -1,8 +1,8 @@
-package com.github.zhangkaitao.shiro.chapter6.realm;
+package com.github.zhangkaitao.shiro.chapter11.realm;
 
-import com.github.zhangkaitao.shiro.chapter6.service.UserService;
-import com.github.zhangkaitao.shiro.chapter6.service.UserServiceImpl;
-import com.github.zhangkaitao.shiro.chapter6.entity.User;
+import com.github.zhangkaitao.shiro.chapter11.entity.User;
+import com.github.zhangkaitao.shiro.chapter11.service.UserService;
+import com.github.zhangkaitao.shiro.chapter11.service.UserServiceImpl;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

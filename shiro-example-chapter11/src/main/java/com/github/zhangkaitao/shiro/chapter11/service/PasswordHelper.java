@@ -1,6 +1,6 @@
-package com.github.zhangkaitao.shiro.chapter6.service;
+package com.github.zhangkaitao.shiro.chapter11.service;
 
-import com.github.zhangkaitao.shiro.chapter6.entity.User;
+import com.github.zhangkaitao.shiro.chapter11.entity.User;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
