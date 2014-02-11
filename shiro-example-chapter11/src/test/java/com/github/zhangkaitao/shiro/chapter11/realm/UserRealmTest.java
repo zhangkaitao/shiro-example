@@ -2,10 +2,13 @@ package com.github.zhangkaitao.shiro.chapter11.realm;
 
 import com.github.zhangkaitao.shiro.chapter11.BaseTest;
 import junit.framework.Assert;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 
 /**
@@ -17,62 +20,46 @@ public class UserRealmTest extends BaseTest {
     
 
     @Test
-      public void testLoginSuccess() {
-        login("classpath:shiro.ini", u1.getUsername(), password);
+      public void testClearCachedAuthenticationInfo() {
+        login(u1.getUsername(), password);
         userService.changePassword(u1.getId(), password + "1");
-        login("classpath:shiro.ini", u1.getUsername(), password + "1");
-    }
 
-    @Test(expected = UnknownAccountException.class)
-    public void testLoginFailWithUnknownUsername() {
-        login("classpath:shiro.ini", u1.getUsername() + "1", password);
-    }
+        RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearCachedAuthenticationInfo(subject().getPrincipals());
 
-    @Test(expected = IncorrectCredentialsException.class)
-    public void testLoginFailWithErrorPassowrd() {
-        login("classpath:shiro.ini", u1.getUsername(), password + "1");
-    }
-
-    @Test(expected = LockedAccountException.class)
-    public void testLoginFailWithLocked() {
-        login("classpath:shiro.ini", u4.getUsername(), password + "1");
-    }
-
-    @Test(expected = ExcessiveAttemptsException.class)
-    public void testLoginFailWithLimitRetryCount() {
-        for(int i = 1; i <= 5; i++) {
-            try {
-                login("classpath:shiro.ini", u3.getUsername(), password + "1");
-            } catch (Exception e) {/*ignore*/}
-        }
-        login("classpath:shiro.ini", u3.getUsername(), password + "1");
-
-        //需要清空缓存，否则后续的执行就会遇到问题(或者使用一个全新账户测试)
-    }
-
-
-    @Test
-    public void testHasRole() {
-        login("classpath:shiro.ini", u1.getUsername(), password );
-        Assert.assertTrue(subject().hasRole("admin"));
+        login(u1.getUsername(), password + "1");
     }
 
     @Test
-    public void testNoRole() {
-        login("classpath:shiro.ini", u2.getUsername(), password);
-        Assert.assertFalse(subject().hasRole("admin"));
+    public void testClearCachedAuthorizationInfo() {
+        login(u1.getUsername(), password);
+        subject().checkRole(r1.getRole());
+        userService.correlationRoles(u1.getId(), r2.getId());
+
+        RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearCachedAuthorizationInfo(subject().getPrincipals());
+
+        subject().checkRole(r2.getRole());
     }
 
-    @Test
-    public void testHasPermission() {
-        login("classpath:shiro.ini", u1.getUsername(), password);
-        Assert.assertTrue(subject().isPermittedAll("user:create", "menu:create"));
-    }
+
 
     @Test
-    public void testNoPermission() {
-        login("classpath:shiro.ini", u2.getUsername(), password);
-        Assert.assertFalse(subject().isPermitted("user:create"));
+    public void testClearCache() {
+        login(u1.getUsername(), password);
+        subject().checkRole(r1.getRole());
+
+        userService.changePassword(u1.getId(), password + "1");
+        userService.correlationRoles(u1.getId(), r2.getId());
+
+        RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearCache(subject().getPrincipals());
+
+        login(u1.getUsername(), password + "1");
+        subject().checkRole(r2.getRole());
     }
 
 }

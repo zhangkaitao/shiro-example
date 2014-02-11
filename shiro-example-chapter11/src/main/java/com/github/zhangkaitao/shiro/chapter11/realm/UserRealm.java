@@ -26,7 +26,6 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userService.findRoles(username));
         authorizationInfo.setStringPermissions(userService.findPermissions(username));
-
         return authorizationInfo;
     }
 
@@ -36,7 +35,6 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String)token.getPrincipal();
 
         User user = userService.findByUsername(username);
-
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
@@ -54,4 +52,33 @@ public class UserRealm extends AuthorizingRealm {
         );
         return authenticationInfo;
     }
+
+    @Override
+    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthorizationInfo(principals);
+    }
+
+    @Override
+    public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthenticationInfo(principals);
+    }
+
+    @Override
+    public void clearCache(PrincipalCollection principals) {
+        super.clearCache(principals);
+    }
+
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthorizationCache().clear();
+    }
+
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
+    }
+
 }
