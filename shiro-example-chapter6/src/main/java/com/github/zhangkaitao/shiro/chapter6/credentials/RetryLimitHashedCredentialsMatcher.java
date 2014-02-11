@@ -6,9 +6,7 @@ import net.sf.ehcache.Element;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.SaltedAuthenticationInfo;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.codec.Base64;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
