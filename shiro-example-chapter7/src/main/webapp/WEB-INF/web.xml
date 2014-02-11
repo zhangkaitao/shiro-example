@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0"
+        metadata-complete="false">
+
+    <!--- shiro 1.1 -->
+    <!--<filter>-->
+        <!--<filter-name>iniShiroFilter</filter-name>-->
+        <!--<filter-class>org.apache.shiro.web.servlet.IniShiroFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>configPath</param-name>-->
+            <!--<param-value>classpath:shiro.ini</param-value>&lt;!&ndash; 默认先从/WEB-INF/shiro.ini，如果没有找classpath:shiro.ini&ndash;&gt;-->
+        <!--</init-param>-->
+        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-name>config</param-name>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-value>&ndash;&gt;-->
+                <!--&lt;!&ndash;[main]&ndash;&gt;-->
+                <!--&lt;!&ndash;authc.loginUrl=/login&ndash;&gt;-->
+
+                <!--&lt;!&ndash;[users]&ndash;&gt;-->
+                <!--&lt;!&ndash;zhang=123,admin&ndash;&gt;-->
+
+                <!--&lt;!&ndash;[roles]&ndash;&gt;-->
+                <!--&lt;!&ndash;admin=user:*,menu:*&ndash;&gt;-->
+
+                <!--&lt;!&ndash;[urls]&ndash;&gt;-->
+                <!--&lt;!&ndash;/login=anon&ndash;&gt;-->
+                <!--&lt;!&ndash;/static/**=anon&ndash;&gt;-->
+                <!--&lt;!&ndash;/authenticated=authc&ndash;&gt;-->
+                <!--&lt;!&ndash;/role=authc,roles[admin]&ndash;&gt;-->
+                <!--&lt;!&ndash;/permission=authc,perms["user:create"]&ndash;&gt;-->
+            <!--&lt;!&ndash;</param-value>&ndash;&gt;-->
+        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>iniShiroFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
+    <!--- shiro 1.2 -->
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>shiroEnvironmentClass</param-name>
+        <param-value>org.apache.shiro.web.env.IniWebEnvironment</param-value><!-- 默认先从/WEB-INF/shiro.ini，如果没有找classpath:shiro.ini -->
+    </context-param>
+    <context-param>
+        <param-name>shiroConfigLocations</param-name>
+        <param-value>classpath:shiro.ini</param-value>
+    </context-param>
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--<error-page>-->
+        <!--<error-code>401</error-code>-->
+        <!--<location>/WEB-INF/jsp/unauthorized.jsp</location>-->
+    <!--</error-page>-->
+
+</web-app>
