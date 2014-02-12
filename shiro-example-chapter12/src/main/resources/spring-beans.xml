@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/shiro"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- Base DAO -->
+    <bean id="baseDao" abstract="true">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- DAO -->
+    <bean id="permissionDao" class="com.github.zhangkaitao.shiro.chapter12.dao.PermissionDaoImpl" parent="baseDao"/>
+    <bean id="roleDao" class="com.github.zhangkaitao.shiro.chapter12.dao.RoleDaoImpl" parent="baseDao"/>
+    <bean id="userDao" class="com.github.zhangkaitao.shiro.chapter12.dao.UserDaoImpl" parent="baseDao"/>
+
+    <!-- Service -->
+    <bean id="permissionService" class="com.github.zhangkaitao.shiro.chapter12.service.PermissionServiceImpl">
+        <property name="permissionDao" ref="permissionDao"/>
+    </bean>
+
+    <bean id="roleService" class="com.github.zhangkaitao.shiro.chapter12.service.RoleServiceImpl">
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+
+    <bean id="passwordHelper" class="com.github.zhangkaitao.shiro.chapter12.service.PasswordHelper">
+        <property name="algorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>
+    </bean>
+
+    <bean id="userService" class="com.github.zhangkaitao.shiro.chapter12.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="passwordHelper" ref="passwordHelper"/>
+    </bean>
+
+
+</beans>

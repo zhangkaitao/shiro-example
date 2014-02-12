@@ -9,6 +9,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.subject.Subject;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -17,7 +18,16 @@ import org.junit.Test;
  * <p>Version: 1.0
  */
 public class UserRealmTest extends BaseTest {
-    
+
+    @Override
+    public void tearDown() throws Exception {
+        userService.changePassword(u1.getId(), password);
+        RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.clearCachedAuthenticationInfo(subject().getPrincipals());
+
+        super.tearDown();
+    }
 
     @Test
       public void testClearCachedAuthenticationInfo() {
@@ -29,6 +39,8 @@ public class UserRealmTest extends BaseTest {
         userRealm.clearCachedAuthenticationInfo(subject().getPrincipals());
 
         login(u1.getUsername(), password + "1");
+
+
     }
 
     @Test
