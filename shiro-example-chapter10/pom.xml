@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>shiro-example-chapter10</artifactId>
     <packaging>war</packaging>
-    <name>shiro-example-chapter10 Maven Webapp</name>
+    <name>shiro-example-chapter10</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
