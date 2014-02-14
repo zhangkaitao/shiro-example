@@ -153,8 +153,22 @@
                     <webAppConfig>
                         <contextPath>/${project.build.finalName}</contextPath>
                     </webAppConfig>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>9080</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                        <connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
+                            <port>9443</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                            <keystore>${project.basedir}/localhost.keystore</keystore>
+                            <password>123456</password>
+                            <keyPassword>123456</keyPassword>
+                        </connector>
+                    </connectors>
                 </configuration>
             </plugin>
+
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
