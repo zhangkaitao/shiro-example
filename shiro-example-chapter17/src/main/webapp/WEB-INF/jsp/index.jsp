@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>简单Shiro权限管理系统</title>
+    <title>Shiro综合案例</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout-default-latest.css">
 </head>
 <body>
