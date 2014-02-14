@@ -12,7 +12,7 @@
     </bean>
 
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.github.zhangkaitao.shiro.chapter13.credentials.RetryLimitHashedCredentialsMatcher">
+    <bean id="credentialsMatcher" class="com.github.zhangkaitao.shiro.chapter15.credentials.RetryLimitHashedCredentialsMatcher">
         <constructor-arg ref="cacheManager"/>
         <property name="hashAlgorithmName" value="md5"/>
         <property name="hashIterations" value="2"/>
@@ -20,7 +20,7 @@
     </bean>
 
 
-    <bean id="casRealm" class="com.github.zhangkaitao.shiro.chapter13.realm.MyCasRealm">
+    <bean id="casRealm" class="com.github.zhangkaitao.shiro.chapter15.realm.MyCasRealm">
         <property name="userService" ref="userService"/>
         <property name="cachingEnabled" value="true"/>
         <property name="authenticationCachingEnabled" value="true"/>
