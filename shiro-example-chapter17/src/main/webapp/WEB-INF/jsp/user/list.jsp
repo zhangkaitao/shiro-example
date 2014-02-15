@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="zhangfn" uri="http://github.com/zhangkaitao/tags/zhang-functions" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title></title>
@@ -12,7 +13,10 @@
     <div class="message">${msg}</div>
 </c:if>
 
-<a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
+<shiro:hasPermission name="user:create">
+    <a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
+</shiro:hasPermission>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,11 +33,17 @@
                 <td>${zhangfn:organizationName(user.organizationId)}</td>
                 <td>${zhangfn:roleNames(user.roleIds)}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/update">修改</a>
-                    |
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/delete">删除</a>
-                    |
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/changePassword">改密</a>
+                    <shiro:hasPermission name="user:update">
+                        <a href="${pageContext.request.contextPath}/user/${user.id}/update">修改</a>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="user:delete">
+                        <a href="${pageContext.request.contextPath}/user/${user.id}/delete">删除</a>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="user:update">
+                        <a href="${pageContext.request.contextPath}/user/${user.id}/changePassword">改密</a>
+                    </shiro:hasPermission>
                 </td>
             </tr>
         </c:forEach>

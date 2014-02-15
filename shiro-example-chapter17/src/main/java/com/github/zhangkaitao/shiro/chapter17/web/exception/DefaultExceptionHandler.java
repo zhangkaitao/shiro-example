@@ -28,5 +28,4 @@ public class DefaultExceptionHandler {
         mv.setViewName("unauthorized");
         return mv;
     }
-
 }

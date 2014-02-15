@@ -16,6 +16,7 @@
     <context:component-scan base-package="com.github.zhangkaitao.shiro.chapter17">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+
     <!-- 开启AOP监听 只对当前配置文件有效 -->
     <aop:aspectj-autoproxy expose-proxy="true"/>
 

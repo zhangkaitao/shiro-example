@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title></title>
@@ -38,14 +39,20 @@
                 <td>${resource.url}</td>
                 <td>${resource.permission}</td>
                 <td>
-                    <c:if test="${resource.type ne 'button'}">
-                    <a href="${pageContext.request.contextPath}/resource/${resource.id}/appendChild">添加子节点</a>
-                    |
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/resource/${resource.id}/update">修改</a>
+                    <shiro:hasPermission name="resource:create">
+                        <c:if test="${resource.type ne 'button'}">
+                        <a href="${pageContext.request.contextPath}/resource/${resource.id}/appendChild">添加子节点</a>
+                        </c:if>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="resource:update">
+                        <a href="${pageContext.request.contextPath}/resource/${resource.id}/update">修改</a>
+                    </shiro:hasPermission>
                     <c:if test="${not resource.rootNode}">
-                    |
-                    <a class="deleteBtn" href="#" data-id="${resource.id}">删除</a>
+
+                    <shiro:hasPermission name="resource:delete">
+                        <a class="deleteBtn" href="#" data-id="${resource.id}">删除</a>
+                    </shiro:hasPermission>
                     </c:if>
                 </td>
             </tr>
