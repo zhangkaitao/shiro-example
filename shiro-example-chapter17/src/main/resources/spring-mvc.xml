@@ -23,7 +23,11 @@
     </context:component-scan>
 
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.github.zhangkaitao.shiro.chapter17.web.bind.method.CurrentUserMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
     <!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
     <mvc:default-servlet-handler/>
@@ -42,12 +46,11 @@
     </bean>
 
     <!-- 控制器异常处理 -->
-    <!--<bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">-->
-        <!--<property name="contentNegotiationManager" ref="contentNegotiationManager"/>-->
-    <!--</bean>-->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>
 
-    <!--<bean class="com.sishuok.es.extra.exception.web.DefaultExceptionHandler"/>-->
+    <bean class="com.github.zhangkaitao.shiro.chapter17.web.exception.DefaultExceptionHandler"/>
 
-    <!--<import resource="spring-mvc-shiro.xml"/>-->
+    <import resource="spring-mvc-shiro.xml"/>
 
 </beans>

@@ -20,4 +20,7 @@ public interface OrganizationService {
     Organization findOne(Long organizationId);
     List<Organization> findAll();
 
+    Object findAllWithExclude(Organization excludeOraganization);
+
+    void move(Organization source, Organization target);
 }

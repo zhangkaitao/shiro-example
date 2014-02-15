@@ -18,6 +18,10 @@ public interface UserService {
      */
     public User createUser(User user);
 
+    public User updateUser(User user);
+
+    public void deleteUser(Long userId);
+
     /**
      * 修改密码
      * @param userId

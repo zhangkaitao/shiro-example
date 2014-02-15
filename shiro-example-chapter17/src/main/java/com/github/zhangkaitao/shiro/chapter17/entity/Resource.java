@@ -11,10 +11,25 @@ public class Resource implements Serializable {
     private Long id; //编号
     private String name; //资源名称
     private ResourceType type = ResourceType.menu; //资源类型
+    private String url; //资源路径
     private String permission; //权限字符串
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
+
+    public static enum ResourceType {
+        menu("菜单"), button("按钮");
+
+        private final String info;
+        private ResourceType(String info) {
+            this.info = info;
+        }
+
+        public String getInfo() {
+            return info;
+        }
+    }
+
 
 
     public Long getId() {
@@ -39,6 +54,14 @@ public class Resource implements Serializable {
 
     public void setType(ResourceType type) {
         this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getPermission() {
@@ -73,6 +96,13 @@ public class Resource implements Serializable {
         this.available = available;
     }
 
+    public boolean isRootNode() {
+        return parentId == 0;
+    }
+
+    public String makeSelfAsParentIds() {
+        return getParentIds() + getId() + "/";
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

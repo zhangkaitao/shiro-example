@@ -3,64 +3,41 @@
 
     <diskStore path="java.io.tmpdir"/>
 
-    <defaultCache
-            maxEntriesLocalHeap="1000"
-            eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="3600"
-            overflowToDisk="false">
-    </defaultCache>
-
     <!-- 登录记录缓存 锁定10分钟 -->
-    <cache name="loginRecordCache"
+    <cache name="passwordRetryCache"
            maxEntriesLocalHeap="2000"
            eternal="false"
-           timeToIdleSeconds="600"
+           timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
            overflowToDisk="false"
            statistics="true">
     </cache>
 
-    <!-- 系统用户缓存  没必要过期 -->
-    <cache name="sys-userCache"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
+    <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
            eternal="false"
-           diskPersistent="false"
+           timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
-
-    <!-- 系统用户授权缓存  没必要过期 -->
-    <cache name="sys-authCache"
-           maxEntriesLocalHeap="10000"
            overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           memoryStoreEvictionPolicy="LRU"
-           statistics="true"/>
+           statistics="true">
+    </cache>
 
-    <!-- 菜单缓存  没必要过期 -->
-    <cache name="sys-menuCache"
-           maxEntriesLocalHeap="10000"
+    <cache name="authenticationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
            overflowToDisk="false"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
+           statistics="true">
+    </cache>
 
-
-    <!-- shiro 会话缓存 不需要序列化到磁盘 此处我们放到db中了 此处cache没必要过期 因为我们存放到db了 -->
     <cache name="shiro-activeSessionCache"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="false"
+           maxEntriesLocalHeap="2000"
            eternal="false"
-           diskPersistent="false"
+           timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 
 </ehcache>

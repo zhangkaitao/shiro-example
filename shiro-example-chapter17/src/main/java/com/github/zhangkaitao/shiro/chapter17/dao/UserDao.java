@@ -13,7 +13,7 @@ import java.util.Set;
 public interface UserDao {
 
     public User createUser(User user);
-    public void updateUser(User user);
+    public User updateUser(User user);
     public void deleteUser(Long userId);
 
     User findOne(Long userId);

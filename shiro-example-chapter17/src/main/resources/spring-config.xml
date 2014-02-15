@@ -80,6 +80,8 @@
         <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 
-    <import resource="classpath:spring-config-cache.xml"/>
+    <bean class="com.github.zhangkaitao.shiro.spring.SpringUtils"/>
 
+    <import resource="classpath:spring-config-cache.xml"/>
+    <import resource="classpath:spring-config-shiro.xml"/>
 </beans>

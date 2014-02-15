@@ -22,4 +22,6 @@ public interface ResourceService {
     List<Resource> findAll();
 
     Set<String> findPermissions(Set<Long> resourceIds);
+
+    List<Resource> findMenus(Set<String> permissions);
 }
