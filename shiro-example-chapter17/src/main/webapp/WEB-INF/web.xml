@@ -6,7 +6,7 @@
         version="3.0"
         metadata-complete="false">
 
-    <display-name>es-web</display-name>
+    <display-name>shiro-example-chapter17</display-name>
 
     <!-- Spring配置文件开始  -->
     <context-param>
@@ -46,8 +46,7 @@
     <!-- 设置servlet编码结束 -->
 
     <!-- shiro 安全过滤器 -->
-    <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
-   <!-- <filter>
+    <filter>
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         <async-supported>true</async-supported>
@@ -57,14 +56,11 @@
         </init-param>
     </filter>
 
-    &lt;!&ndash; Make sure any request you want accessible to Shiro is filtered. /* catches all &ndash;&gt;
-    &lt;!&ndash; requests.  Usually this filter mapping is defined first (before all others) to &ndash;&gt;
-    &lt;!&ndash; ensure that Shiro works in subsequent filters in the filter chain:             &ndash;&gt;
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>-->
+    </filter-mapping>
 
 
     <!-- 验证码过滤器需要放到Shiro之后 因为Shiro将包装HttpSession 如果不 可能造成两次的sesison id 不一样 -->

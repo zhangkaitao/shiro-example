@@ -3,10 +3,12 @@ package com.github.zhangkaitao.shiro.chapter17.service;
 import com.github.zhangkaitao.shiro.chapter17.dao.ResourceDao;
 import com.github.zhangkaitao.shiro.chapter17.entity.Resource;
 import com.github.zhangkaitao.shiro.chapter17.entity.Role;
+import org.apache.shiro.authz.permission.WildcardPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,5 +60,36 @@ public class ResourceServiceImpl implements ResourceService {
             }
         }
         return permissions;
+    }
+
+    @Override
+    public List<Resource> findMenus(Set<String> permissions) {
+        List<Resource> allResources = findAll();
+        List<Resource> menus = new ArrayList<Resource>();
+        for(Resource resource : allResources) {
+            if(resource.isRootNode()) {
+                continue;
+            }
+            if(resource.getType() != Resource.ResourceType.menu) {
+                continue;
+            }
+            if(!hasPermission(permissions, resource)) {
+                continue;
+            }
+            menus.add(resource);
+        }
+        return menus;
+    }
+
+    private boolean hasPermission(Set<String> permissions, Resource resource) {
+        if(StringUtils.isEmpty(resource.getPermission())) {
+            return true;
+        }
+        for(String permission : permissions) {
+            if(new WildcardPermission(permission).implies(new WildcardPermission(resource.getPermission()))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

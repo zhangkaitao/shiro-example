@@ -4,6 +4,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,6 +74,9 @@ public class User implements Serializable {
     }
 
     public List<Long> getRoleIds() {
+        if(roleIds == null) {
+            roleIds = new ArrayList<Long>();
+        }
         return roleIds;
     }
 

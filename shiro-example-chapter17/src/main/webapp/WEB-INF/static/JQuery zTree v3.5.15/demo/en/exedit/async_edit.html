@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - async & edit</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			async: {
+				enable: true,
+				url:"../asyncData/getNodes.php",
+				autoParam:["id", "name=n", "level=lv"],
+				otherParam:{"otherParam":"zTreeAsyncTest"},
+				dataFilter: filter
+			},
+			view: {expandSpeed:"",
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				selectedMulti: false
+			},
+			edit: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeRemove: beforeRemove,
+				beforeRename: beforeRename
+			}
+		};
+
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes) return null;
+			for (var i=0, l=childNodes.length; i<l; i++) {
+				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			}
+			return childNodes;
+		}
+		function beforeRemove(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.selectNode(treeNode);
+			return confirm("Confirm delete node '" + treeNode.name + "' it?");
+		}		
+		function beforeRename(treeId, treeNode, newName) {
+			if (newName.length == 0) {
+				alert("Node name can not be empty.");
+				return false;
+			}
+			return true;
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+				+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_"+treeNode.tId);
+			if (btn) btn.bind("click", function(){
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+				return false;
+			});
+		};
+		function removeHoverDom(treeId, treeNode) {
+			$("#addBtn_"+treeNode.tId).unbind().remove();
+		};
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting);
+		});
+		//-->
+	</SCRIPT>
+	<style type="text/css">
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+	</style>
+</HEAD>
+
+<BODY>
+<h1>Editing Dynamic Tree</h1>
+<h6>[ File Path: exedit/async_edit.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1, Explanation of editing dynamic tree</h2>
+				<ul class="list">
+				<li>1) This Demo is based on the "Advanced Edit Nodes" to modify, and open to drag and drop functionality, can be compared with that demo.</li>
+				<li>2) At the same time set the editing mode and dynamic mode can be achieved editing dynamic tree.</li>
+				<li class="highlight_red">3) zTree improved editing capabilities in dynamic mode, if the parent node hasn‘t loaded the child nodes, it will first load the child nodes before it add child node.</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of setting</h2>
+				<ul class="list">
+				<li class="highlight_red">1) Use editing features, please refer to "Normal Drag Node Operation" & "Basic Edit Nodes" demo of the instructions.</li>
+				<li class="highlight_red">2) Use dynamic loading, please refer to "Dynamic Tree with Ajax" demo of the instructions.</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3, Explanation of treeNode</h2>
+				<ul class="list">
+				<li>No special requirements on the node data, please refer to "Dynamic Tree with Ajax" & "Normal Drag Node Operation" & "Basic Edit Nodes" demo of the instructions</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

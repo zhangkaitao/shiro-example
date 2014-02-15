@@ -41,4 +41,14 @@ public class OrganizationServiceImpl implements OrganizationService {
     public List<Organization> findAll() {
         return organizationDao.findAll();
     }
+
+    @Override
+    public List<Organization> findAllWithExclude(Organization excludeOraganization) {
+        return organizationDao.findAllWithExclude(excludeOraganization);
+    }
+
+    @Override
+    public void move(Organization source, Organization target) {
+        organizationDao.move(source, target);
+    }
 }

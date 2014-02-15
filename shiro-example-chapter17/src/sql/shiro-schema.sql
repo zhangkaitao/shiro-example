@@ -14,7 +14,7 @@ create table sys_user (
   constraint pk_sys_user primary key(id)
 ) charset=utf8 ENGINE=InnoDB;
 create unique index idx_sys_user_username on sys_user(username);
-create unique index idx_sys_user_organization_id on sys_user(organization_id);
+create index idx_sys_user_organization_id on sys_user(organization_id);
 
 create table sys_organization (
   id bigint auto_increment,
@@ -32,6 +32,7 @@ create table sys_resource (
   id bigint auto_increment,
   name varchar(100),
   type varchar(50),
+  url varchar(200),
   parent_id bigint,
   parent_ids varchar(100),
   permission varchar(100),
