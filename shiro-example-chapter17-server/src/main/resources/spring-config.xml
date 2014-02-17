@@ -13,7 +13,7 @@
     <context:property-placeholder location="classpath:resources.properties"/>
 
     <!-- 扫描注解Bean -->
-    <context:component-scan base-package="com.github.zhangkaitao.shiro.chapter16">
+    <context:component-scan base-package="com.github.zhangkaitao.shiro.chapter17">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 

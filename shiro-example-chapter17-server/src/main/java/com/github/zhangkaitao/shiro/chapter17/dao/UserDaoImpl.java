@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
         String sql = "update oauth2_user set username=?, password=?, salt=? where id=?";
         jdbcTemplate.update(
                 sql,
-                user.getUsername(), user.getPassword(), user.getSalt());
+                user.getUsername(), user.getPassword(), user.getSalt(), user.getId());
         return user;
     }
 

@@ -35,7 +35,6 @@
                 <td>
                     <a href="${pageContext.request.contextPath}/client/${client.id}/update">修改</a>
                     <a href="${pageContext.request.contextPath}/client/${client.id}/delete">删除</a>
-                    <a href="${pageContext.request.contextPath}/client/${client.id}/changePassword">改密</a>
                 </td>
             </tr>
         </c:forEach>

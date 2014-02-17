@@ -48,7 +48,7 @@ public class ClientDaoImpl implements ClientDao {
         String sql = "update oauth2_client set client_name=?, client_id=?, client_secret=? where id=?";
         jdbcTemplate.update(
                 sql,
-                client.getClientName(), client.getClientId(), client.getClientSecret());
+                client.getClientName(), client.getClientId(), client.getClientSecret(), client.getId());
         return client;
     }
 
