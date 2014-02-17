@@ -1,6 +1,7 @@
 package com.github.zhangkaitao.shiro.chapter17.web.controller;
 
-import com.github.zhangkaitao.shiro.chapter17.service.CodeService;
+import com.github.zhangkaitao.shiro.chapter17.Constants;
+import com.github.zhangkaitao.shiro.chapter17.service.OAuthService;
 import com.github.zhangkaitao.shiro.chapter17.service.UserService;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
@@ -13,6 +14,7 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -32,10 +34,8 @@ import java.net.URISyntaxException;
 @RestController
 public class TokenController {
 
-    public static final String INVALID_CLIENT_DESCRIPTION = "Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method).";
-
     @Autowired
-    private CodeService codeService;
+    private OAuthService oAuthService;
 
     @Autowired
     private UserService userService;
@@ -44,104 +44,65 @@ public class TokenController {
     public HttpEntity token(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
 
-        String username = "1";
-
         try {
+            //构建OAuth请求
             OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
-            OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
 
-            // check if clientid is valid
-            if (!checkClientId(oauthRequest.getClientId())) {
-                return buildInvalidClientIdResponse();
+            //检查提交的客户端id是否正确
+            if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
+                OAuthResponse response =
+                        OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
+                                .setError(OAuthError.TokenResponse.INVALID_CLIENT)
+                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .buildJSONMessage();
+                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
-            // check if client_secret is valid
-            if (!checkClientSecret(oauthRequest.getClientSecret())) {
-                return buildInvalidClientSecretResponse();
+            // 检查客户端安全KEY是否正确
+            if (!oAuthService.checkClientSecret(oauthRequest.getClientSecret())) {
+                OAuthResponse response =
+                        OAuthASResponse.errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
+                                .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
+                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .buildJSONMessage();
+                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
-            // do checking for different grant types
+            String authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
+            // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN
             if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.AUTHORIZATION_CODE.toString())) {
-                if (!checkAuthCode(oauthRequest.getParam(OAuth.OAUTH_CODE))) {
-                    return buildBadAuthCodeResponse();
+                if (!oAuthService.checkAuthCode(authCode)) {
+                    OAuthResponse response = OAuthASResponse
+                            .errorResponse(HttpServletResponse.SC_BAD_REQUEST)
+                            .setError(OAuthError.TokenResponse.INVALID_GRANT)
+                            .setErrorDescription("错误的授权码")
+                            .buildJSONMessage();
+                    return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
                 }
-            } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.PASSWORD.toString())) {
-                if (!checkUserPass(oauthRequest.getUsername(), oauthRequest.getPassword())) {
-                    return buildInvalidUserPassResponse();
-                }
-            } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.REFRESH_TOKEN.toString())) {
-                // refresh token is not supported in this implementation
-                buildInvalidUserPassResponse();
             }
 
+            //生成Access Token
+            OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
             final String accessToken = oauthIssuerImpl.accessToken();
-            codeService.addAccessToken(accessToken, username);
+            oAuthService.addAccessToken(accessToken, oAuthService.getUsernameByAuthCode(authCode));
 
+
+            //生成OAuth响应
             OAuthResponse response = OAuthASResponse
                     .tokenResponse(HttpServletResponse.SC_OK)
                     .setAccessToken(accessToken)
-                    .setExpiresIn("3600")
+                    .setExpiresIn(String.valueOf(oAuthService.getExpireIn()))
                     .buildJSONMessage();
+
+            //根据OAuthResponse生成ResponseEntity
             return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
 
         } catch (OAuthProblemException e) {
+            //构建错误响应
             OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e)
                     .buildJSONMessage();
             return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
-
-    private HttpEntity buildInvalidClientIdResponse() throws OAuthSystemException {
-        OAuthResponse response =
-                OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
-                        .setError(OAuthError.TokenResponse.INVALID_CLIENT)
-                        .setErrorDescription(INVALID_CLIENT_DESCRIPTION)
-                        .buildJSONMessage();
-        return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-    }
-
-    private HttpEntity buildInvalidClientSecretResponse() throws OAuthSystemException {
-        OAuthResponse response =
-                OAuthASResponse.errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
-                        .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT).setErrorDescription(INVALID_CLIENT_DESCRIPTION)
-                        .buildJSONMessage();
-        return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-    }
-
-    private HttpEntity buildBadAuthCodeResponse() throws OAuthSystemException {
-        OAuthResponse response = OAuthASResponse
-                .errorResponse(HttpServletResponse.SC_BAD_REQUEST)
-                .setError(OAuthError.TokenResponse.INVALID_GRANT)
-                .setErrorDescription("invalid authorization code")
-                .buildJSONMessage();
-        return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-    }
-
-    private HttpEntity buildInvalidUserPassResponse() throws OAuthSystemException {
-        OAuthResponse response = OAuthASResponse
-                .errorResponse(HttpServletResponse.SC_BAD_REQUEST)
-                .setError(OAuthError.TokenResponse.INVALID_GRANT)
-                .setErrorDescription("invalid username or password")
-                .buildJSONMessage();
-        return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-    }
-
-    private boolean checkClientId(String clientId) {
-        return true;
-    }
-
-    private boolean checkClientSecret(String secret) {
-        return true;
-    }
-
-    private boolean checkAuthCode(String authCode) {
-        return codeService.isValidAuthCode(authCode);
-    }
-
-
-    private boolean checkUserPass(String username, String password) {
-        return userService.checkUsernamePassword(username, password);
-    }
-
 
 }

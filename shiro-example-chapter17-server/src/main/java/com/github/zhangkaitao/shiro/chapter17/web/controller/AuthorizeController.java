@@ -1,21 +1,30 @@
 package com.github.zhangkaitao.shiro.chapter17.web.controller;
 
-import com.github.zhangkaitao.shiro.chapter17.service.CodeService;
+import com.github.zhangkaitao.shiro.chapter17.Constants;
+import com.github.zhangkaitao.shiro.chapter17.service.ClientService;
+import com.github.zhangkaitao.shiro.chapter17.service.OAuthService;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.OAuth;
+import org.apache.oltu.oauth2.common.error.OAuthError;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.oltu.oauth2.common.utils.OAuthUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,65 +38,109 @@ import java.net.URISyntaxException;
  * <p>Date: 14-2-16
  * <p>Version: 1.0
  */
-@RestController
+@Controller
 public class AuthorizeController {
 
     @Autowired
-    private CodeService codeService;
+    private OAuthService oAuthService;
+    @Autowired
+    private ClientService clientService;
 
     @RequestMapping("/authorize")
-    public HttpEntity authorize(HttpServletRequest request)
+    public Object authorize(
+            Model model,
+            HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
 
-        String username = "1";
-
         try {
+            //构建OAuth 授权请求
             OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
-            OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
 
-            //build response according to response_type
+            //检查传入的客户端id是否正确
+            if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
+                OAuthResponse response =
+                        OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
+                                .setError(OAuthError.TokenResponse.INVALID_CLIENT)
+                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .buildJSONMessage();
+                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+            }
+
+
+            Subject subject = SecurityUtils.getSubject();
+            //如果用户没有登录，跳转到登陆页面
+            if(!subject.isAuthenticated()) {
+                if(!login(subject, request)) {//登录失败时跳转到登陆页面
+                    model.addAttribute("client", clientService.findByClientId(oauthRequest.getClientId()));
+                    return "oauth2login";
+                }
+            }
+
+            String username = (String)subject.getPrincipal();
+            System.out.println(subject.getPrincipal());
+            //生成授权码
+            String authorizationCode = null;
+            //responseType目前仅支持CODE，另外还有TOKEN
             String responseType = oauthRequest.getParam(OAuth.OAUTH_RESPONSE_TYPE);
+            if (responseType.equals(ResponseType.CODE.toString())) {
+                OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
+                authorizationCode = oauthIssuerImpl.authorizationCode();
+                oAuthService.addAuthCode(authorizationCode, username);
+            }
 
+            //进行OAuth响应构建
             OAuthASResponse.OAuthAuthorizationResponseBuilder builder =
                     OAuthASResponse.authorizationResponse(request, HttpServletResponse.SC_FOUND);
-
-            if (responseType.equals(ResponseType.CODE.toString())) {
-                final String authorizationCode = oauthIssuerImpl.authorizationCode();
-                codeService.addAuthCode(authorizationCode, username);
-                builder.setCode(authorizationCode);
-            }
-            if (responseType.equals(ResponseType.TOKEN.toString())) {
-                final String accessToken = oauthIssuerImpl.accessToken();
-                codeService.addAccessToken(accessToken, username);
-
-                builder.setAccessToken(accessToken);
-                builder.setExpiresIn(codeService.getExpireIn());
-            }
-
+            //设置授权码
+            builder.setCode(authorizationCode);
+            //得到到客户端重定向地址
             String redirectURI = oauthRequest.getParam(OAuth.OAUTH_REDIRECT_URI);
-            final OAuthResponse response = builder.location(redirectURI).buildQueryMessage();
-            URI url = new URI(response.getLocationUri());
 
+            //构建响应
+            final OAuthResponse response = builder.location(redirectURI).buildQueryMessage();
+
+            //根据OAuthResponse返回ResponseEntity响应
             HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(url);
-            ResponseEntity entity = new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
-            return entity;
+            headers.setLocation(new URI(response.getLocationUri()));
+            return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
 
+            //出错处理
             String redirectUri = e.getRedirectUri();
-
             if (OAuthUtils.isEmpty(redirectUri)) {
-                ResponseEntity entity = new ResponseEntity("OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
-                return entity;
+                //告诉客户端没有传入redirectUri直接报错
+                return new ResponseEntity("OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
             }
+
+            //返回错误消息（如?error=）
             final OAuthResponse response =
                     OAuthASResponse.errorResponse(HttpServletResponse.SC_FOUND)
                             .error(e).location(redirectUri).buildQueryMessage();
-            final URI location = new URI(response.getLocationUri());
             HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(location);
-            ResponseEntity entity = new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
-            return entity;
+            headers.setLocation(new URI(response.getLocationUri()));
+            return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
+        }
+    }
+
+    private boolean login(Subject subject, HttpServletRequest request) {
+        if("get".equalsIgnoreCase(request.getMethod())) {
+            return false;
+        }
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            return false;
+        }
+
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+        try {
+            subject.login(token);
+            return true;
+        } catch (Exception e) {
+            request.setAttribute("error", "登录失败:" + e.getClass().getName());
+            return false;
         }
     }
 }

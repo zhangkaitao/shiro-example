@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
  * <p>Version: 1.0
  */
 @Service
-public class CodeServiceImpl implements CodeService {
+public class OAuthServiceImpl implements OAuthService {
 
     private Cache cache;
 
     @Autowired
-    public CodeServiceImpl(CacheManager cacheManager) {
+    private ClientService clientService;
+
+    @Autowired
+    public OAuthServiceImpl(CacheManager cacheManager) {
         this.cache = cacheManager.getCache("code-cache");
     }
 
@@ -31,13 +34,33 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public boolean isValidAuthCode(String authCode) {
+    public String getUsernameByAuthCode(String authCode) {
+        return (String)cache.get(authCode).get();
+    }
+
+    @Override
+    public String getUsernameByAccessToken(String accessToken) {
+        return (String)cache.get(accessToken).get();
+    }
+
+    @Override
+    public boolean checkAuthCode(String authCode) {
         return cache.get(authCode) != null;
     }
 
     @Override
-    public boolean isValidAccessToken(String accessToken) {
+    public boolean checkAccessToken(String accessToken) {
         return cache.get(accessToken) != null;
+    }
+
+    @Override
+    public boolean checkClientId(String clientId) {
+        return clientService.findByClientId(clientId) != null;
+    }
+
+    @Override
+    public boolean checkClientSecret(String clientSecret) {
+        return clientService.findByClientSecret(clientSecret) != null;
     }
 
     @Override

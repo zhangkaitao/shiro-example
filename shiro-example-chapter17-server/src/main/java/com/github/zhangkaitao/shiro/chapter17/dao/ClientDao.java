@@ -19,6 +19,7 @@ public interface ClientDao {
 
     List<Client> findAll();
 
-    Client findByClientId(Long clientId);
+    Client findByClientId(String clientId);
+    Client findByClientSecret(String clientSecret);
 
 }

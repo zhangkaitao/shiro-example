@@ -114,7 +114,11 @@
                 / = anon
                 /login = authc
                 /logout = logout
-                /authenticated = authc
+
+                /authorize=anon
+                /token=anon
+                /resource=anon
+
                 /** = user
             </value>
         </property>

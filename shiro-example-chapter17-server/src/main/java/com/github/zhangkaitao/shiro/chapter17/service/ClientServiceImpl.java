@@ -50,7 +50,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByClientId(Long clientId) {
+    public Client findByClientId(String clientId) {
         return clientDao.findByClientId(clientId);
+    }
+
+    @Override
+    public Client findByClientSecret(String clientSecret) {
+        return clientDao.findByClientSecret(clientSecret);
     }
 }
