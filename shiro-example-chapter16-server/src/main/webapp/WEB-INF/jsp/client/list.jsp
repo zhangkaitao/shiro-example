@@ -12,25 +12,30 @@
     <div class="message">${msg}</div>
 </c:if>
 
-<shiro:hasPermission name="user:create">
-    <a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
+<a href="${pageContext.request.contextPath}/client/create">客户端新增</a><br/>
+<shiro:hasPermission name="client:create">
+    <a href="${pageContext.request.contextPath}/client/create">客户端新增</a><br/>
 </shiro:hasPermission>
 
 <table class="table">
     <thead>
         <tr>
-            <th>用户名</th>
+            <th>客户端名</th>
+            <th>客户端ID</th>
+            <th>客户端安全KEY</th>
             <th>操作</th>
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${userList}" var="user">
+        <c:forEach items="${clientList}" var="client">
             <tr>
-                <td>${user.username}</td>
+                <td>${client.clientName}</td>
+                <td>${client.clientId}</td>
+                <td>${client.clientSecret}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/update">修改</a>
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/delete">删除</a>
-                    <a href="${pageContext.request.contextPath}/user/${user.id}/changePassword">改密</a>
+                    <a href="${pageContext.request.contextPath}/client/${client.id}/update">修改</a>
+                    <a href="${pageContext.request.contextPath}/client/${client.id}/delete">删除</a>
+                    <a href="${pageContext.request.contextPath}/client/${client.id}/changePassword">改密</a>
                 </td>
             </tr>
         </c:forEach>

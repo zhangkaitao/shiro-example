@@ -15,22 +15,13 @@
 
     <form:form method="post" commandName="user">
         <form:hidden path="id"/>
-        <form:hidden path="salt"/>
-        <c:if test="${op ne '新增'}">
-            <form:hidden path="password"/>
-        </c:if>
+        <form:hidden path="clientId"/>
+        <form:hidden path="clientSecret"/>
 
         <div class="form-group">
-            <form:label path="username">用户名：</form:label>
+            <form:label path="username">客户端名：</form:label>
             <form:input path="username"/>
         </div>
-
-        <c:if test="${op eq '新增'}">
-            <div class="form-group">
-                <form:label path="password">密码：</form:label>
-                <form:password path="password"/>
-            </div>
-        </c:if>
 
         <form:button>${op}</form:button>
 

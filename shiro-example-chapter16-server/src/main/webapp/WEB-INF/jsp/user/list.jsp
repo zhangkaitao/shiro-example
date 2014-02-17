@@ -12,10 +12,7 @@
     <div class="message">${msg}</div>
 </c:if>
 
-<shiro:hasPermission name="user:create">
-    <a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
-</shiro:hasPermission>
-
+<a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
 <table class="table">
     <thead>
         <tr>

@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         version="3.0"
-        metadata-complete="false">
+        metadata-complete="true">
 
     <display-name>shiro-example-chapter17</display-name>
 
@@ -61,18 +61,6 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
-
-    <!-- 验证码过滤器需要放到Shiro之后 因为Shiro将包装HttpSession 如果不 可能造成两次的sesison id 不一样 -->
-    <!--<filter>-->
-        <!--<filter-name>JCaptchaFilter</filter-name>-->
-        <!--<filter-class>com.sishuok.es.common.web.jcaptcha.JCaptchaFilter</filter-class>-->
-        <!--<async-supported>true</async-supported>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>JCaptchaFilter</filter-name>-->
-        <!--<url-pattern>/jcaptcha.jpg</url-pattern>-->
-    <!--</filter-mapping>-->
 
     <servlet>
         <servlet-name>spring</servlet-name>
