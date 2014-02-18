@@ -33,12 +33,12 @@ public class UserInfoController {
     @Autowired
     private OAuthService oAuthService;
 
-    @RequestMapping("/get_user_info")
+    @RequestMapping("/userInfo")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException {
         try {
 
             //构建OAuth资源请求
-            OAuthAccessResourceRequest oauthRequest = new OAuthAccessResourceRequest(request, ParameterStyle.HEADER);
+            OAuthAccessResourceRequest oauthRequest = new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
             //获取Access Token
             String accessToken = oauthRequest.getAccessToken();
 

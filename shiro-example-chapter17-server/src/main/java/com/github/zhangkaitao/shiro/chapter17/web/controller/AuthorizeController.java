@@ -77,7 +77,6 @@ public class AuthorizeController {
             }
 
             String username = (String)subject.getPrincipal();
-            System.out.println(subject.getPrincipal());
             //生成授权码
             String authorizationCode = null;
             //responseType目前仅支持CODE，另外还有TOKEN
