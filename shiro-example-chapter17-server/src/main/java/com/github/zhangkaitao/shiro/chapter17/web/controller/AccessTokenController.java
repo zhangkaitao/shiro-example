@@ -32,7 +32,7 @@ import java.net.URISyntaxException;
  * <p>Version: 1.0
  */
 @RestController
-public class TokenController {
+public class AccessTokenController {
 
     @Autowired
     private OAuthService oAuthService;
@@ -40,7 +40,7 @@ public class TokenController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/token")
+    @RequestMapping("/accessToken")
     public HttpEntity token(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
 
