@@ -54,21 +54,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkUsernamePassword(String username, String password) {
-        User dbUser = findByUsername(username);
-        if(dbUser == null) {
-            return false;
-        }
-
-        User tmpUser = new User();
-        tmpUser.setUsername(dbUser.getUsername());
-        tmpUser.setSalt(dbUser.getSalt());
-        tmpUser.setPassword(password);
-        passwordHelper.encryptPassword(tmpUser);
-        return tmpUser.getPassword().equals(dbUser.getPassword());
-    }
-
-    @Override
     public User findOne(Long userId) {
         return userDao.findOne(userId);
     }

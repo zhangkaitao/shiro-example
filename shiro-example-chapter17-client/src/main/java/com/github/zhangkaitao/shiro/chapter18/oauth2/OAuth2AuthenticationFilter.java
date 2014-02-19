@@ -70,7 +70,7 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
 
         String error = request.getParameter("error");
         String errorDescription = request.getParameter("error_description");
-        if(!StringUtils.isEmpty(error)) {
+        if(!StringUtils.isEmpty(error)) {//如果服务端返回了错误
             WebUtils.issueRedirect(request, response, failureUrl + "?error=" + error + "error_description=" + errorDescription);
             return false;
         }
@@ -78,6 +78,7 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
         Subject subject = getSubject(request, response);
         if(!subject.isAuthenticated()) {
             if(StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
+                //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
                 saveRequestAndRedirectToLogin(request, response);
                 return false;
             }

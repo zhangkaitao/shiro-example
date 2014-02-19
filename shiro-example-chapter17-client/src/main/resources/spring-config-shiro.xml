@@ -89,7 +89,7 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
-    <!-- 基于Form表单的身份验证过滤器 -->
+    <!-- OAuth2身份验证过滤器 -->
     <bean id="oAuth2AuthenticationFilter" class="com.github.zhangkaitao.shiro.chapter18.oauth2.OAuth2AuthenticationFilter">
         <property name="authcCodeParam" value="code"/>
         <property name="failureUrl" value="/oauth2Failure.jsp"/>

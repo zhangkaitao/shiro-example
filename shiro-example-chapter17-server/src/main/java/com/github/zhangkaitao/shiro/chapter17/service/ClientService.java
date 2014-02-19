@@ -20,6 +20,6 @@ public interface ClientService {
     List<Client> findAll();
 
     Client findByClientId(String clientId);
-    Client findByClientSecret(String clientId);
+    Client findByClientSecret(String clientSecret);
 
 }

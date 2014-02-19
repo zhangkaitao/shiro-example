@@ -50,7 +50,7 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof OAuth2Token;
+        return token instanceof OAuth2Token;//表示此Realm只支持OAuth2Token类型
     }
 
     @Override
@@ -73,6 +73,8 @@ public class OAuth2Realm extends AuthorizingRealm {
     private String extractUsername(String code) {
 
         try {
+            OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
+
             OAuthClientRequest accessTokenRequest = OAuthClientRequest
                     .tokenLocation(accessTokenUrl)
                     .setGrantType(GrantType.AUTHORIZATION_CODE)
@@ -82,7 +84,6 @@ public class OAuth2Realm extends AuthorizingRealm {
                     .setRedirectURI(redirectUrl)
                     .buildQueryMessage();
 
-            OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
             OAuthAccessTokenResponse oAuthResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
 
             String accessToken = oAuthResponse.getAccessToken();

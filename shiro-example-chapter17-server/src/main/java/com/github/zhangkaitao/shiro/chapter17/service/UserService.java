@@ -10,8 +10,6 @@ import java.util.List;
  * <p>Version: 1.0
  */
 public interface UserService {
-
-
     /**
      * 创建用户
      * @param user
@@ -28,9 +26,6 @@ public interface UserService {
      * @param newPassword
      */
     public void changePassword(Long userId, String newPassword);
-
-    public boolean checkUsernamePassword(String username, String password);
-
 
     User findOne(Long userId);
 
