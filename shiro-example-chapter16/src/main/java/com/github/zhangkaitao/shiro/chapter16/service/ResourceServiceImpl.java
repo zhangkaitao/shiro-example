@@ -85,7 +85,9 @@ public class ResourceServiceImpl implements ResourceService {
             return true;
         }
         for(String permission : permissions) {
-            if(new WildcardPermission(permission).implies(new WildcardPermission(resource.getPermission()))) {
+            WildcardPermission p1 = new WildcardPermission(permission);
+            WildcardPermission p2 = new WildcardPermission(resource.getPermission());
+            if(p1.implies(p2) || p2.implies(p1)) {
                 return true;
             }
         }
