@@ -37,12 +37,6 @@
             <form:input path="permissions"/>
         </div>
 
-        <div class="form-group">
-            <form:label path="methods">请求方法列表：</form:label>
-            <form:input path="methods"/>
-        </div>
-
-
         <form:button>${op}</form:button>
 
     </form:form>

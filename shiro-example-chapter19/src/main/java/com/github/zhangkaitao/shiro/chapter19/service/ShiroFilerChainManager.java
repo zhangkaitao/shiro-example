@@ -48,10 +48,6 @@ public class ShiroFilerChainManager {
             if (!StringUtils.isEmpty(urlFilter.getPermissions())) {
                 filterChainManager.addToChain(url, "perms", urlFilter.getPermissions());
             }
-            //注册rest filter
-            if (!StringUtils.isEmpty(urlFilter.getMethods())) {
-                filterChainManager.addToChain(url, "rest", urlFilter.getMethods());
-            }
         }
 
 

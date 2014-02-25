@@ -13,7 +13,6 @@ public class UrlFilter implements Serializable {
     private String url;
     private String roles;
     private String permissions;
-    private String methods;
 
     public Long getId() {
         return id;
@@ -55,14 +54,6 @@ public class UrlFilter implements Serializable {
         this.permissions = permissions;
     }
 
-    public String getMethods() {
-        return methods;
-    }
-
-    public void setMethods(String methods) {
-        this.methods = methods;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +79,6 @@ public class UrlFilter implements Serializable {
                 ", url='" + url + '\'' +
                 ", roles='" + roles + '\'' +
                 ", permissions='" + permissions + '\'' +
-                ", methods='" + methods + '\'' +
                 '}';
     }
 }

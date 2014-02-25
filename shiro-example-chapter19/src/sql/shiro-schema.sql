@@ -60,7 +60,6 @@ create table sys_url_filter (
   url varchar(100),
   roles varchar(100),
   permissions varchar(100),
-  methods varchar(100),
   constraint pk_sys_url_filter primary key(id)
 ) charset=utf8 ENGINE=InnoDB;
 create unique index idx_sys_url_filter_url on sys_url_filter(url);

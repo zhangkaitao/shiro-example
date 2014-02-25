@@ -23,7 +23,6 @@
             <th>URL</th>
             <th>角色列表</th>
             <th>权限列表</th>
-            <th>请求方法列表</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -34,7 +33,6 @@
                 <td>${urlFilter.url}</td>
                 <td>${urlFilter.roles}</td>
                 <td>${urlFilter.permissions}</td>
-                <td>${urlFilter.methods}</td>
                 <td>
                     <shiro:hasPermission name="urlFilter:update">
                         <a href="${pageContext.request.contextPath}/urlFilter/${urlFilter.id}/update">修改</a>
