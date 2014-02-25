@@ -1,0 +1,38 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId, treeNode)</span><span class="path">setting.callback.</span>beforeEditName</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.exedit</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>Used to capture the event before click edit button, zTree based on return value to determine whether to allow to edit the name.</p>
+			<p class="highlight_red">This callback is used to capture the event which edit button is clicked, then trigger the custom editing operation.</p>
+			<p>Default: null</p>
+		</div>
+	</div>
+	<h3>Function Parameter Descriptions</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree unique identifier: <b class="highlight_red">treeId</b>, easy for users to control.</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>JSON data object of the node which will be edited name.</p>
+	<h4 class="topLine"><b>Return </b><span>Boolean</span></h4>
+	<p>return true or false</p>
+	<p class="highlight_red">If return false, the node will not be able to edit the name.</p>
+	</div>
+	<h3>Examples of setting & function</h3>
+	<h4>1. disable to edit the parent node's name</h4>
+	<pre xmlns=""><code>function zTreeBeforeEditName(treeId, treeNode) {
+	return !treeNode.isParent;
+}
+var setting = {
+	edit: {
+		enable: true
+	},
+	callback: {
+		beforeEditName: zTreeBeforeEditName
+	}
+};
+......</code></pre>
+</div>
+</div>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - drag & drop</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"can drag 1", open:true},
+			{ id:11, pId:1, name:"can drag 1-1"},
+			{ id:12, pId:1, name:"can drag 1-2", open:true},
+			{ id:121, pId:12, name:"can drag 1-2-1"},
+			{ id:122, pId:12, name:"can drag 1-2-2"},
+			{ id:123, pId:12, name:"can drag 1-2-3"},
+			{ id:13, pId:1, name:"can't drag 1-3", open:true, drag:false},
+			{ id:131, pId:13, name:"can't drag 1-3-1", drag:false},
+			{ id:132, pId:13, name:"can't drag 1-3-2", drag:false},
+			{ id:133, pId:13, name:"can drag 1-3-3"},
+			{ id:2, pId:0, name:"can drag 2", open:true},
+			{ id:21, pId:2, name:"can drag 2-1"},
+			{ id:22, pId:2, name:"can't drop 2-2", open:true, drop:false},
+			{ id:221, pId:22, name:"can drag 2-2-1"},
+			{ id:222, pId:22, name:"can drag 2-2-2"},
+			{ id:223, pId:22, name:"can drag 2-2-3"},
+			{ id:23, pId:2, name:"can drag 2-3"}
+		];
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}
+
+		function setCheck() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			isCopy = $("#copy").attr("checked"),
+			isMove = $("#move").attr("checked"),
+			prev = $("#prev").attr("checked"),
+			inner = $("#inner").attr("checked"),
+			next = $("#next").attr("checked");
+			zTree.setting.edit.drag.isCopy = isCopy;
+			zTree.setting.edit.drag.isMove = isMove;
+			showCode(1, ['setting.edit.drag.isCopy = ' + isCopy, 'setting.edit.drag.isMove = ' + isMove]);
+
+			zTree.setting.edit.drag.prev = prev;
+			zTree.setting.edit.drag.inner = inner;
+			zTree.setting.edit.drag.next = next;
+			showCode(2, ['setting.edit.drag.prev = ' + prev, 'setting.edit.drag.inner = ' + inner, 'setting.edit.drag.next = ' + next]);
+		}
+		function showCode(id, str) {
+			var code = $("#code" + id);
+			code.empty();
+			for (var i=0, l=str.length; i<l; i++) {
+				code.append("<li>"+str[i]+"</li>");
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			setCheck();
+			$("#copy").bind("change", setCheck);
+			$("#move").bind("change", setCheck);
+			$("#prev").bind("change", setCheck);
+			$("#inner").bind("change", setCheck);
+			$("#next").bind("change", setCheck);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Normal Drag Node Operation</h1>
+<h6>[ File Path: exedit/drag.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1, Explanation of setting</h2>
+				<ul class="list">
+				<li>This Demo only shows how to drag & drop nodes using the basic method and configure parameters.</li>
+				<li class="highlight_red">1) Must set 'setting.edit' attributes, see the API documentation for more related contents.</li>
+				<li class="highlight_red">2) If you want to use drag & drop callback, muse to set 'setting.callback.beforeDrag / onDrag / beforeDrop / onDrop' attributes, see the API documentation for more related contents.</li>
+				<li><p>Basic settings:<br/>
+						<input type="checkbox" id="copy" class="checkbox first" checked /><span>can Copy</span>
+						<input type="checkbox" id="move" class="checkbox " checked /><span>can Move</span><br/>
+						<ul id="code1" class="log" style="height:42px;"></ul></p>
+				</li>
+				<li><p>Position settings:<br/>
+						<input type="checkbox" id="prev" class="checkbox first" checked /><span>prev</span>
+						<input type="checkbox" id="inner" class="checkbox " checked /><span>inner</span>
+						<input type="checkbox" id="next" class="checkbox " checked /><span>next</span><br/>
+						<ul id="code2" class="log" style="height:65px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of treeNode</h2>
+				<ul class="list">
+				<li>No special requirements on the node data, the user can add custom attributes.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

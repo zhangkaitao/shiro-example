@@ -1,0 +1,39 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId, treeNodes)</span><span class="path">setting.callback.</span>beforeDrag</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.exedit</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>Used to capture the event before drag node, zTree based on return value to determine whether to start to drag node.</p>
+			<p>Default: null</p>
+		</div>
+	</div>
+	<h3>Function Parameter Descriptions</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree unique identifier: <b class="highlight_red">treeId</b>, the tree is what the treeNodes are belong to, easy for users to control.</p>
+	<h4 class="topLine"><b>treeNodes</b><span>Array(JSON)</span></h4>
+	<p>A collection of the nodes which will be dragged</p>
+	<p class="highlight_red">v3.x allows drag and drop multiple sibling nodes, so this parameter is modified to Array(JSON).</p>
+	<p class="highlight_red">If the selected nodes aren't the sibling nodes, you can only drag one node which mouse over.</p>
+	<h4 class="topLine"><b>Return </b><span>Boolean</span></h4>
+	<p>return true or false</p>
+	<p class="highlight_red">If return false, zTree will stop drag, and will not trigger the 'onDrag / beforeDrop / onDrop' callback.</p>
+	</div>
+	<h3>Examples of setting & function</h3>
+	<h4>1. disable to drag all node</h4>
+	<pre xmlns=""><code>function zTreeBeforeDrag(treeId, treeNodes) {
+    return false;
+};
+var setting = {
+	edit: {
+		enable: true
+	},
+	callback: {
+		beforeDrag: zTreeBeforeDrag
+	}
+};
+......</code></pre>
+</div>
+</div>

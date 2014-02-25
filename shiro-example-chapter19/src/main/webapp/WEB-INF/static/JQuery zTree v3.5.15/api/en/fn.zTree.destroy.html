@@ -1,0 +1,28 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId)</span><span class="path">$.fn.zTree.</span>destroy</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.core</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>From zTree v3.4, zTree support the method for destruction.</p>
+			<p>1. This method can destroy the zTree with specify treeId, and can destroy all of the zTrees.</p>
+			<p class="highlight_red">2. If you want to destory some one zTree, you can use the 'zTreeObj.destroy()' method.</p>
+			<p class="highlight_red">3. If you want to use the tree which has been destroyed, you must use the 'init()' method at first.</p>
+		</div>
+	</div>
+	<h3>Function Parameter Descriptions</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree unique identifier</p>
+	<p class="highlight_red">If this parameter is omitted, then will destroy all of the zTrees.</p>
+	<h4 class="topLine"><b>Return </b><span>none</span></h4>
+	<p>no return value</p>
+	</div>
+	<h3>Examples of function</h3>
+	<h4>1. destroy the zTree which its id is 'treeDemo'</h4>
+	<pre xmlns=""><code>$.fn.zTree.destroy("treeDemo");</code></pre>
+	<h4>2. destroy all of the zTrees</h4>
+	<pre xmlns=""><code>$.fn.zTree.destroy();</code></pre>
+</div>
+</div>

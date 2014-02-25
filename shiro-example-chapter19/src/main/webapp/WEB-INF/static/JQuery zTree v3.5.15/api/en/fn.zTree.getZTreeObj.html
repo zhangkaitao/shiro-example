@@ -1,0 +1,25 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId)</span><span class="path">$.fn.zTree.</span>getZTreeObj</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.core</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>zTree v3.x specifically provide the method which can use the tree's Id to get zTree object.</p>
+			<p class="highlight_red">Please initialize zTree first, then you can use this method.</p>
+			<p>Users don't need to set the global variable to hold the zTree object, and all of the callback will return 'treeId' parameters, the user can always use this method to get the zTree object.</p>
+		</div>
+	</div>
+	<h3>Function Parameter Descriptions</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree unique identifier</p>
+	<h4 class="topLine"><b>Return </b><span>JSON</span></h4>
+	<p>zTree object</p>
+	<p>This object can provide the methods of operate the zTree</p>
+	</div>
+	<h3>Examples of function</h3>
+	<h4>1. Get the zTree object which id is 'tree'</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");</code></pre>
+</div>
+</div>
