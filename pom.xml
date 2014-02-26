@@ -29,6 +29,7 @@
         <module>shiro-example-chapter17-client</module>
         <module>shiro-example-chapter18</module>
         <module>shiro-example-chapter19</module>
+        <module>shiro-example-chapter20</module>
     </modules>
 
 
