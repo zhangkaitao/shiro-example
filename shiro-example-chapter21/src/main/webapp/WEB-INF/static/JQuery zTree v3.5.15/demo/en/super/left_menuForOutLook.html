@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - left_menu for Outlook</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var curMenu = null, zTree_Menu = null;
+		var setting = {
+			view: {
+				showLine: false,
+				showIcon: false,
+				selectedMulti: false,
+				dblClickExpand: false,
+				addDiyDom: addDiyDom
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"Folders", open:true},
+			{ id:11, pId:1, name:"Inbox"},
+			{ id:111, pId:11, name:"Inbox1"},
+			{ id:112, pId:111, name:"Inbox2"},
+			{ id:113, pId:112, name:"Inbox3"},
+			{ id:114, pId:113, name:"Inbox4"},
+			{ id:12, pId:1, name:"Junk"},
+			{ id:13, pId:1, name:"Drafts"},
+			{ id:14, pId:1, name:"Sent"},
+			{ id:15, pId:1, name:"Deleted"},
+			{ id:3, pId:0, name:"Quick views"},
+			{ id:31, pId:3, name:"Documents"},
+			{ id:32, pId:3, name:"Photos"}
+		];
+
+		function addDiyDom(treeId, treeNode) {
+			var spaceWidth = 5;
+			var switchObj = $("#" + treeNode.tId + "_switch"),
+			icoObj = $("#" + treeNode.tId + "_ico");
+			switchObj.remove();
+			icoObj.before(switchObj);
+
+			if (treeNode.level > 1) {
+				var spaceStr = "<span style='display: inline-block;width:" + (spaceWidth * treeNode.level)+ "px'></span>";
+				switchObj.before(spaceStr);
+			}
+		}
+
+		function beforeClick(treeId, treeNode) {
+			if (treeNode.level == 0 ) {
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				zTree.expandNode(treeNode);
+				return false;
+			}
+			return true;
+		}
+
+		$(document).ready(function(){
+			var treeObj = $("#treeDemo");
+			$.fn.zTree.init(treeObj, setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("treeDemo");
+			curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
+			zTree_Menu.selectNode(curMenu);
+
+			treeObj.hover(function () {
+				if (!treeObj.hasClass("showIcon")) {
+					treeObj.addClass("showIcon");
+				}
+			}, function() {
+				treeObj.removeClass("showIcon");
+			});
+		});
+		//-->
+	</SCRIPT>
+	<style type="text/css">
+.ztree * {font-size: 10pt;font-family:"Microsoft Yahei",Verdana,Simsun,"Segoe UI Web Light","Segoe UI Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","Helvetica Neue",Arial}
+.ztree li ul{ margin:0; padding:0}
+.ztree li {line-height:30px;}
+.ztree li a {width:200px;height:30px;padding-top: 0px;}
+.ztree li a:hover {text-decoration:none; background-color: #E7E7E7;}
+.ztree li a span.button.switch {visibility:hidden}
+.ztree.showIcon li a span.button.switch {visibility:visible}
+.ztree li a.curSelectedNode {background-color:#D4D4D4;border:0;height:30px;}
+.ztree li span {line-height:30px;}
+.ztree li span.button {margin-top: -7px;}
+.ztree li span.button.switch {width: 16px;height: 16px;}
+
+.ztree li a.level0 span {font-size: 150%;font-weight: bold;}
+.ztree li span.button {background-image:url("./left_menuForOutLook.png"); *background-image:url("./left_menuForOutLook.gif")}
+.ztree li span.button.switch.level0 {width: 20px; height:20px}
+.ztree li span.button.switch.level1 {width: 20px; height:20px}
+.ztree li span.button.noline_open {background-position: 0 0;}
+.ztree li span.button.noline_close {background-position: -18px 0;}
+.ztree li span.button.noline_open.level0 {background-position: 0 -18px;}
+.ztree li span.button.noline_close.level0 {background-position: -18px -18px;}
+	</style>
+ </HEAD>
+
+<BODY>
+<h1>Left Menu Like OutLook Style</h1>
+<h6>[ File Path: super/left_menuForOutLook.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>Explanation of implementation method</h2>
+				<ul class="list">
+				<li>I make one left menu which resembles outlook.com, so share to everyone.</li>
+				<li class="highlight_red">1. Please note that the css code of the source of this page.</li>
+				<li class="highlight_red">2. Please note that the javascript code of the source of this page, especially the switch button is moved into the &lt;a&gt; tag  when 'addDiyDom' callback be called</li>
+				<li class="highlight_red">3. Use the method of add zTree class name to implement the switch button be hidden or showing.</li>
+				<li>4. Other auxiliary rules, please write code based on your needs.</li>
+				<li>5. The current rule description:<br/>
+				&nbsp;&nbsp;Click the root node can control the parent node be expanded or collapsed;<br/>
+				&nbsp;&nbsp;The parent nodes without root only are only clicked the arrow icon can control be expanded or  collapsed;br/>
+				</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - multiTree</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"parent node 1", open:true},
+			{ id:11, pId:1, name:"leaf node 1-1"},
+			{ id:12, pId:1, name:"leaf node 1-2"},
+			{ id:13, pId:1, name:"leaf node 1-3"},
+			{ id:2, pId:0, name:"parent node 2", open:true},
+			{ id:21, pId:2, name:"leaf node 2-1"},
+			{ id:22, pId:2, name:"leaf node 2-2"},
+			{ id:23, pId:2, name:"leaf node 2-3"},
+			{ id:3, pId:0, name:"parent node 3", open:true },
+			{ id:31, pId:3, name:"leaf node 3-1"},
+			{ id:32, pId:3, name:"leaf node 3-2"},
+			{ id:33, pId:3, name:"leaf node 3-3"}
+		];
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}
+		
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$.fn.zTree.init($("#treeDemo2"), setting);
+			
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Multiple Trees</h1>
+<h6>[ File Path: exedit/multiTree.html ]</h6>
+<div class="content_wrap">
+	<div>
+		<ul class="info">
+			<li class="title"><h2>1, Explanation of setting</h2>
+				<ul class="list">
+				<li>zTree enables drag and drop nodes between multiple trees, only need to create two draggable tree can be. And you can use the callback function and zTree method achieve a more complex operating rules, here is only the basic demo.</li>
+				<li class="highlight_red">On the 'setting' configuration information please refer to drag and drop, edit, etc. demo's instructions</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of treeNode</h2>
+				<ul class="list">
+				<li>No special requirements on the node data, the user can add custom attributes.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul id="treeDemo2" class="ztree"></ul>
+	</div>
+</div>
+</BODY>
+</HTML>

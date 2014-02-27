@@ -37,7 +37,6 @@ public class StatelessRealm extends AuthorizingRealm {
         String username = statelessToken.getUsername();
         String key = getKey(username);
         String serverDigest = HmacSHA256Utils.digest(key, statelessToken.getParams());
-        System.out.println("server===" + serverDigest);
         return new SimpleAuthenticationInfo(
                 username,
                 serverDigest,
