@@ -9,10 +9,10 @@ import java.io.Serializable;
  */
 public class UrlFilter implements Serializable {
     private Long id;
-    private String name;
-    private String url;
-    private String roles;
-    private String permissions;
+    private String name; //url名称/描述
+    private String url; //地址
+    private String roles; //所需要的角色，可省略
+    private String permissions; //所需要的权限，可省略
 
     public Long getId() {
         return id;

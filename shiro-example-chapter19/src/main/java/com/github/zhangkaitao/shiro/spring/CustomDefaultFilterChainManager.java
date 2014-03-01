@@ -35,7 +35,7 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
     public CustomDefaultFilterChainManager() {
         setFilters(new LinkedHashMap<String, Filter>());
         setFilterChains(new LinkedHashMap<String, NamedFilterList>());
-        addDefaultFilters(true);
+        addDefaultFilters(false);
     }
 
     public Map<String, String> getFilterChainDefinitionMap() {
@@ -47,7 +47,9 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
     }
 
     public void setCustomFilters(Map<String, Filter> customFilters) {
-        getFilters().putAll(customFilters);
+        for(Map.Entry<String, Filter> entry : customFilters.entrySet()) {
+            addFilter(entry.getKey(), entry.getValue(), false);
+        }
     }
 
 
@@ -90,12 +92,6 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
 
     @PostConstruct
     public void init() {
-        Map<String, Filter> defaultFilters = getFilters();
-        //apply global settings if necessary:
-        for (Filter filter : defaultFilters.values()) {
-            applyGlobalPropertiesIfNecessary(filter);
-        }
-
         //Apply the acquired and/or configured filters:
         Map<String, Filter> filters = getFilters();
         if (!CollectionUtils.isEmpty(filters)) {
@@ -106,9 +102,6 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
                 if (filter instanceof Nameable) {
                     ((Nameable) filter).setName(name);
                 }
-                //'init' argument is false, since Spring-configured filters should be initialized
-                //in Spring (i.e. 'init-method=blah') or implement InitializingBean:
-                addFilter(name, filter, false);
             }
         }
 

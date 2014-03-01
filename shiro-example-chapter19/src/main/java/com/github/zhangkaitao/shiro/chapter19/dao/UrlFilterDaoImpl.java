@@ -25,7 +25,7 @@ public class UrlFilterDaoImpl implements UrlFilterDao {
     private JdbcTemplate jdbcTemplate;
     
     public UrlFilter createUrlFilter(final UrlFilter urlFilter) {
-        final String sql = "insert into sys_url_filter(name, url, roles, permissions) values(?,?,?,?,?)";
+        final String sql = "insert into sys_url_filter(name, url, roles, permissions) values(?,?,?,?)";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
