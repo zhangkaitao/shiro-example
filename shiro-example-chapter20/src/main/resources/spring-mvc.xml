@@ -19,7 +19,6 @@
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
+    <mvc:annotation-driven/>
 
-    <mvc:annotation-driven>
-    </mvc:annotation-driven>
 </beans>

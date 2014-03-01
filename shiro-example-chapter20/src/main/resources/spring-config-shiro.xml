@@ -8,13 +8,15 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-<!-- Realm实现 -->
+    <!-- Realm实现 -->
     <bean id="statelessRealm" class="com.github.zhangkaitao.shiro.chapter20.realm.StatelessRealm">
         <property name="cachingEnabled" value="false"/>
     </bean>
 
+    <!-- Subject工厂 -->
     <bean id="subjectFactory" class="com.github.zhangkaitao.shiro.chapter20.mgt.StatelessDefaultSubjectFactory"/>
 
+    <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
         <property name="sessionValidationSchedulerEnabled" value="false"/>
     </bean>

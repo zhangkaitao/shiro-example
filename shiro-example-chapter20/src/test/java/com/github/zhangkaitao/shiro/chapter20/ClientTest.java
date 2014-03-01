@@ -55,7 +55,7 @@ public class ClientTest {
         params.add(Constants.PARAM_DIGEST, HmacSHA256Utils.digest(key, params));
 
         String url = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/hello1")
+                .fromHttpUrl("http://localhost:8080/hello")
                 .queryParams(params).build().toUriString();
 
         ResponseEntity responseEntity = restTemplate.getForEntity(url, String.class);
@@ -78,7 +78,7 @@ public class ClientTest {
         params.set("param2", param2 + "1");
 
         String url = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/hello1")
+                .fromHttpUrl("http://localhost:8080/hello")
                 .queryParams(params).build().toUriString();
 
         try {
