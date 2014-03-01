@@ -11,53 +11,53 @@
     <function>
         <description>obj in collection</description>
         <name>in</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>boolean in(java.lang.Iterable,java.lang.Object)</function-signature>
     </function>
 
     <function>
         <description>根据id显示组织机构名称</description>
         <name>organizationName</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String organizationName(java.lang.Long)</function-signature>
     </function>
     <function>
         <description>根据id列表显示多个组织机构名称</description>
         <name>organizationNames</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String organizationNames(java.util.Collection)</function-signature>
     </function>
 
     <function>
         <description>根据id显示角色名称</description>
         <name>roleName</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String roleName(java.lang.Long)</function-signature>
     </function>
     <function>
         <description>根据id列表显示多个角色名称</description>
         <name>roleNames</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String roleNames(java.util.Collection)</function-signature>
     </function>
 
     <function>
         <description>根据id显示资源名称</description>
         <name>resourceName</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String resourceName(java.lang.Long)</function-signature>
     </function>
     <function>
         <description>根据id列表显示多个资源名称</description>
         <name>resourceNames</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String resourceNames(java.util.Collection)</function-signature>
     </function>
 
     <function>
         <description>根据id获取用户名</description>
         <name>username</name>
-        <function-class>com.github.zhangkaitao.shiro.chapter20.web.taglib.Functions</function-class>
+        <function-class>com.github.zhangkaitao.shiro.chapter21.web.taglib.Functions</function-class>
         <function-signature>java.lang.String username(java.lang.Long)</function-signature>
     </function>
 

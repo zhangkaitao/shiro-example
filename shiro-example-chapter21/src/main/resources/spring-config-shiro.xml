@@ -14,7 +14,7 @@
     </bean>
 
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.github.zhangkaitao.shiro.chapter20.credentials.RetryLimitHashedCredentialsMatcher">
+    <bean id="credentialsMatcher" class="com.github.zhangkaitao.shiro.chapter21.credentials.RetryLimitHashedCredentialsMatcher">
         <constructor-arg ref="cacheManager"/>
         <property name="hashAlgorithmName" value="md5"/>
         <property name="hashIterations" value="2"/>
@@ -22,7 +22,7 @@
     </bean>
 
     <!-- Realm实现 -->
-    <bean id="userRealm" class="com.github.zhangkaitao.shiro.chapter20.realm.UserRealm">
+    <bean id="userRealm" class="com.github.zhangkaitao.shiro.chapter21.realm.UserRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="false"/>
         <!--<property name="authenticationCachingEnabled" value="true"/>-->
@@ -100,7 +100,7 @@
         <property name="loginUrl" value="/login"/>
     </bean>
 
-    <bean id="sysUserFilter" class="com.github.zhangkaitao.shiro.chapter20.web.shiro.filter.SysUserFilter"/>
+    <bean id="sysUserFilter" class="com.github.zhangkaitao.shiro.chapter21.web.shiro.filter.SysUserFilter"/>
 
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
