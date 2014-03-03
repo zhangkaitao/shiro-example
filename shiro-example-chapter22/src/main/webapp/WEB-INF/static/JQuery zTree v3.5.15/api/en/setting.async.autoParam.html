@@ -1,0 +1,39 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Array(String)</span><span class="path">setting.async.</span>autoParam</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.core</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>Required automatically submit the parameters about the properties of the parent node, when the asynchronous load. It is valid when <span class="highlight_red">[setting.async.enable = true]</span></p>
+			<p>Default：[ ]</p>
+		</div>
+	</div>
+	<h3>Array(String) Format</h3>
+	<div class="desc">
+	<p>1. Just save the attribute name of node to the array. For example: ["id", "name"]</p>
+	<p>2. You can change the parameter name. For example: server only accepts "zId" -- ["id=zId"]</p>
+	</div>
+	<h3>Examples of setting</h3>
+	<h4>1. set auto commit 'id' attribute</h4>
+	<pre xmlns=""><code>var setting = {
+	async: {
+		enable: true,
+		url: "http://host/getNode.php",
+		autoParam: ["id"]
+	}
+};
+If have the parent node: {id:1, name:"test"}, When asynchronously load this parent node's child nodes, will be submitted parameters: id=1
+......</code></pre>
+	<h4>2. set auto commit 'id' attribute, but parameter name is 'zId'</h4>
+	<pre xmlns=""><code>var setting = {
+	async: {
+		enable: true,
+		url: "http://host/getNode.php",
+		autoParam: ["id=zId"]
+	}
+};
+If have the parent node: {id:1, name:"test"}, When asynchronously load this parent node's child nodes, will be submitted parameters: zId=1
+......</code></pre>
+</div>
+</div>

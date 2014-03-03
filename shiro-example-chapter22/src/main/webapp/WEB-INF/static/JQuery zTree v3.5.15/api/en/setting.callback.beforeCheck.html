@@ -1,0 +1,34 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId, treeNode)</span><span class="path">setting.callback.</span>beforeCheck</h2>
+	<h3>Overview<span class="h3_info">[ depends on <span class="highlight_green">jquery.ztree.excheck</span> js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>Used to capture the event before check or uncheck node, zTree based on return value to determine whether to change check state.</p>
+			<p>Default: null</p>
+		</div>
+	</div>
+	<h3>Function Parameter Descriptions</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree unique identifier: <b class="highlight_red">treeId</b>, easy for users to control.</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>JSON data object of the node which is checked or unchecked</p>
+	<h4 class="topLine"><b>Return </b><span>Boolean</span></h4>
+	<p>return true or false</p>
+	<p class="highlight_red">If return false, zTree will not change check state, and will not trigger the 'onCheck' callback.</p>
+	</div>
+	<h3>Examples of setting & function</h3>
+	<h4>1. disable to change check state of all nodes, and keep the check state initialization</h4>
+	<pre xmlns=""><code>function zTreeBeforeCheck(treeId, treeNode) {
+    return false;
+};
+var setting = {
+	callback: {
+		beforeCheck: zTreeBeforeCheck
+	}
+};
+......</code></pre>
+</div>
+</div>
