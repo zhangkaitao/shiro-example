@@ -108,8 +108,6 @@
         <property name="jcaptchaParam" value="jcaptchaCode"/>
         <property name="failureKeyAttribute" value="shiroLoginFailure"/>
     </bean>
-
-
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
