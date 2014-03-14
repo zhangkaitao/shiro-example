@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - Custom Font</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			view: {
+				fontCss: getFont,
+				nameIsHTML: true
+			}
+		};
+
+		var zNodes =[
+			{ name:"Bold", font:{'font-weight':'bold'} },
+			{ name:"Italic", font:{'font-style':'italic'}},
+			{ name:"Background-color", font:{'background-color':'black', 'color':'white'}},
+			{ name:"Red Font", font:{'color':'red'}},
+			{ name:"Blue Font", font:{'color':'blue'}},
+			{ name:"<span style='color:blue;margin-right:0px;'>view</span>.<span style='color:red;margin-right:0px;'>nameIsHTML</span>"},
+			{ name:"zTree Default"}
+		];
+
+		function getFont(treeId, node) {
+			return node.font ? node.font : {};
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Custom Fonts</h1>
+<h6>[ File Path: core/custom_font.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1, Explanation of setting</h2>
+				<ul class="list">
+				<li class="highlight_red">1. For display custom fonts,  you need to set setting.view.fontCss attribute, see the API documentation for more related contents.</li>
+				<li class="highlight_red">2. If you need the node name support the HTML, please set the 'setting.view.nameIsHTML' attribute, see the API documentation for more related contents.</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of treeNode</h2>
+				<ul class="list">
+				<li>Set the font does not require to special node data , but if used to differentiate between different types of nodes, the corresponding data can set custom attributes.</li>
+				<li>The css style of data stored in the nodes within this demo</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

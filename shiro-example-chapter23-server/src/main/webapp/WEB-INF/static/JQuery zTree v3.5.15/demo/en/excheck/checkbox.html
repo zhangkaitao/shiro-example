@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - checkbox</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<!--
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"can check 1", open:true},
+			{ id:11, pId:1, name:"can check 1-1", open:true},
+			{ id:111, pId:11, name:"can check 1-1-1"},
+			{ id:112, pId:11, name:"can check 1-1-2"},
+			{ id:12, pId:1, name:"can check 1-2", open:true},
+			{ id:121, pId:12, name:"can check 1-2-1"},
+			{ id:122, pId:12, name:"can check 1-2-2"},
+			{ id:2, pId:0, name:"can check 2", checked:true, open:true},
+			{ id:21, pId:2, name:"can check 2-1"},
+			{ id:22, pId:2, name:"can check 2-2", open:true},
+			{ id:221, pId:22, name:"can check 2-2-1", checked:true},
+			{ id:222, pId:22, name:"can check 2-2-2"},
+			{ id:23, pId:2, name:"can check 2-3"}
+		];
+
+		var code;
+
+		function setCheck() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			py = $("#py").attr("checked")? "p":"",
+			sy = $("#sy").attr("checked")? "s":"",
+			pn = $("#pn").attr("checked")? "p":"",
+			sn = $("#sn").attr("checked")? "s":"",
+			type = { "Y":py + sy, "N":pn + sn};
+			zTree.setting.check.chkboxType = type;
+			showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+		}
+		function showCode(str) {
+			if (!code) code = $("#code");
+			code.empty();
+			code.append("<li>"+str+"</li>");
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			setCheck();
+			$("#py").bind("change", setCheck);
+			$("#sy").bind("change", setCheck);
+			$("#pn").bind("change", setCheck);
+			$("#sn").bind("change", setCheck);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Checkbox Operation</h1>
+<h6>[ File Path: excheck/checkbox.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1, Explanation of setting</h2>
+				<ul class="list">
+				<li class="highlight_red">Must set setting.check attributes, see the API documentation for more related contents.</li>
+				<li><p>Linkage relationship between parent and child nodes:<br/>
+						check: <input type="checkbox" id="py" class="checkbox first" checked /><span>affect the parent</span>
+						<input type="checkbox" id="sy" class="checkbox first" checked /><span>affect the child</span><br/>
+						uncheck: <input type="checkbox" id="pn" class="checkbox first" checked /><span>affect the parent</span>
+						<input type="checkbox" id="sn" class="checkbox first" checked /><span>affect the child</span><br/>
+						<ul id="code" class="log" style="height:20px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of treeNode</h2>
+				<ul class="list">
+				<li class="highlight_red">1), If you need to initialize the node is checked, please set treeNode.checked attribute. See the API documentation for more related contents.</li>
+				<li class="highlight_red">2), If you need to initialize the node's checkbox is disabled, please set treeNode.chkDisabled attribute. See the API documentation for more related contents and 'chkDisabled Demo'.</li>
+				<li class="highlight_red">3), If you need to initialize the node don't show checkbox, please set treeNode.nocheck attribute. See the API documentation for more related contents and 'nocheck Demo'.</li>
+				<li class="highlight_red">4), If you need to change 'checked' to other attribute, please set setting.data.key.checked attribute. See the API documentation for more related contents.</li>
+				<li>5), By the way, please see the API documentation for 'treeNode.checkedOld / getCheckStatus / check_Child_State / check_Focus'.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - Other Mouse Event</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeMouseDown: beforeMouseDown,
+				beforeMouseUp: beforeMouseUp,
+				beforeRightClick: beforeRightClick,
+				onMouseDown: onMouseDown,
+				onMouseUp: onMouseUp,
+				onRightClick: onRightClick
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"Can't rClick 0", t:"Try RightClick", open:true, right:false},
+			{ id:11, pId:1, name:"Can't rClick 1", t:"Try RightClick", right:false},
+			{ id:12, pId:1, name:"Can't rClick 2", t:"Try RightClick", right:false},
+			{ id:13, pId:1, name:"Can't rClick 3", t:"Try RightClick", right:false},
+			{ id:2, pId:0, name:"Can't msDown 0", t:"Try MouseDown", open:true, down:false},
+			{ id:21, pId:2, name:"Can't msDown 1", t:"Try MouseDown", down:false},
+			{ id:22, pId:2, name:"Can't msDown 2", t:"Try MouseDown", down:false},
+			{ id:23, pId:2, name:"Can't msDown 3", t:"Try MouseDown", down:false},
+			{ id:3, pId:0, name:"Can't msUp 0", t:"Try MouseUp", open:true, up:false},
+			{ id:31, pId:3, name:"Can't msUp 1", t:"Try MouseUp", up:false},
+			{ id:32, pId:3, name:"Can't msUp 2", t:"Try MouseUp", up:false},
+			{ id:33, pId:3, name:"Can't msUp 3", t:"Try MouseUp", up:false}
+		];
+
+		var log, className = {down:"dark", up:"dark", right:"dark"};
+		function beforeMouseDown(treeId, treeNode) {
+			className.down = (className.down === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeMouseDown ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "down" );
+			return (!treeNode || treeNode.down != false);
+		}
+		function onMouseDown(event, treeId, treeNode) {
+			showLog("[ "+getTime()+" onMouseDown ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "down" );
+		}
+		function beforeMouseUp(treeId, treeNode) {
+			className.up = (className.up === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeMouseUp ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "up" );
+			return (!treeNode || treeNode.up != false);
+		}
+		function onMouseUp(event, treeId, treeNode) {
+			showLog("[ "+getTime()+" onMouseUp ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "up" );
+		}
+		function beforeRightClick(treeId, treeNode) {
+			className.right = (className.right === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeRightClick ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "right" );
+			return (!treeNode || treeNode.right != false);
+		}
+		function onRightClick(event, treeId, treeNode) {
+			showLog("[ "+getTime()+" onRightClick ]&nbsp;&nbsp;" + (treeNode?treeNode.name:"root"), "right" );
+		}
+		function showLog(str, logType) {
+			log = $("#log" + "_" + logType);
+			log.append("<li class='"+className[logType]+"'>"+str+"</li>");
+			if(log.children("li").length > 2) {
+				log.get(0).removeChild(log.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds(),
+			ms=now.getMilliseconds();
+			return (h+":"+m+":"+s+ " " +ms);
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Other Mouse Events for zTree</h1>
+<h6>[ File Path: core/otherMouse.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1, 'beforeMousedown / onMousedown / beforeMouseup / onMouseup / beforeRightClick / onRightClick' callback function</h2>
+				<ul class="list">
+				<li>zTree provide these types of mouse event callbacks, in order to facilitate the user to extend the functionality. And doesn't affect zTree normal function, This simple demo shows how to monitor the mousedown/mouseup/rightClick event.</li>
+				<li><p><span class="highlight_red">Try clicking with the mouse on the zTree (left or right),  by the way to see log.</span><br/>
+					mousedown event log:<br/>
+					<ul id="log_down" class="log small"></ul>
+					mouseup event log:<br/>
+					<ul id="log_up" class="log small"></ul>
+					rightClick event log:<br/>
+					<ul id="log_right" class="log small"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2, Explanation of setting</h2>
+				<ul class="list">
+				<li class="highlight_red">Set attributes about 'setting.callback.beforeMousedown / onMousedown / beforeMouseup / onMouseup / beforeRightClick / onRightClick', please see the API documentation for more related contents.</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3, Explanation of treeNode</h2>
+				<ul class="list">
+				<li>No special requirements on the node data, the user can add custom attributes.</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

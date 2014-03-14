@@ -1,0 +1,30 @@
+  
+server
+   权限维护
+      用户 所属系统 权限
+   用户登录
+
+   1、缓存同步问题
+   2、会话同步问题
+
+client
+   app.id=
+   app.key=
+   server.url=
+   login.url=
+   unauthorized.url=
+
+
+   session.id=sid
+   rememberMe.id=rememberMe
+
+   filters=
+   filter.chains=;;;
+
+   session.validation.enable=false
+   session.global.timeout=1800000
+
+   RemoteRealm
+
+app*
+   
