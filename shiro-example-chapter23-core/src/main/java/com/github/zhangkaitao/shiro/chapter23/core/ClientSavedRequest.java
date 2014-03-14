@@ -46,27 +46,29 @@ public class ClientSavedRequest extends SavedRequest {
     }
 
     public String getRequestUrl() {
-        System.out.println(successUrl);
         String requestURI = getRequestURI();
-        if(successUrl != null) {
+        if(successUrl != null) {//1
             if(successUrl.toLowerCase().startsWith("http://") || successUrl.toLowerCase().startsWith("https://")) {
                 return successUrl;
-            } else if(!successUrl.startsWith(contextPath)) {
+            } else if(!successUrl.startsWith(contextPath)) {//2
                 requestURI = contextPath + successUrl;
-            } else {
+            } else {//3
                 requestURI = successUrl;
             }
         }
 
-        StringBuilder requestUrl = new StringBuilder(getScheme());
+        StringBuilder requestUrl = new StringBuilder(getScheme());//4
         requestUrl.append("://");
-        requestUrl.append(getDomain());
+        requestUrl.append(getDomain());//5
+        //6
         if("http".equalsIgnoreCase(getScheme()) && getPort() != 80) {
             requestUrl.append(String.valueOf(port));
         } else if("https".equalsIgnoreCase(getScheme()) && getPort() != 443) {
             requestUrl.append(String.valueOf(port));
         }
+        //7
         requestUrl.append(requestURI);
+        //8
         if (successUrl == null && getQueryString() != null) {
             requestUrl.append("?").append(getQueryString());
         }
