@@ -28,7 +28,6 @@ public class HelloController {
         return "success";
     }
 
-
     @RequestMapping(value = "/attr", method = RequestMethod.GET)
     public String getAttr(
             @RequestParam("key") String key, Model model) {
@@ -41,5 +40,4 @@ public class HelloController {
     public String role2() {
         return "success";
     }
-
 }

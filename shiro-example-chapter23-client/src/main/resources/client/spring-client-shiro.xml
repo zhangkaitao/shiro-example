@@ -52,7 +52,6 @@
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="${client.session.timeout}"/>
         <property name="deleteInvalidSessions" value="false"/>
         <property name="sessionValidationSchedulerEnabled" value="false"/>
         <property name="sessionDAO" ref="sessionDAO"/>

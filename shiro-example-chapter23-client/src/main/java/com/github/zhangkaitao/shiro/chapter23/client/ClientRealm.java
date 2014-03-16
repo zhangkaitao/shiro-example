@@ -16,19 +16,14 @@ import org.apache.shiro.subject.PrincipalCollection;
  * <p>Version: 1.0
  */
 public class ClientRealm extends AuthorizingRealm {
-
     private RemoteServiceInterface remoteService;
     private String appKey;
-
     public void setRemoteService(RemoteServiceInterface remoteService) {
         this.remoteService = remoteService;
     }
-
     public void setAppKey(String appKey) {
         this.appKey = appKey;
     }
-
-
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) principals.getPrimaryPrincipal();
@@ -42,6 +37,6 @@ public class ClientRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //永远不会被调用
-        return null;
+        throw new UnsupportedOperationException("永远不会被调用");
     }
 }

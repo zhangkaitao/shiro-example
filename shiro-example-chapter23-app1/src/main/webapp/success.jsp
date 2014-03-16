@@ -5,7 +5,7 @@
     hello app1.<br/>
 
     <shiro:guest>
-        <a href="${pageContext.request.contextPath}/login?backurl=${pageContext.request.contextPath}">点击登录</a>
+        <a href="${pageContext.request.contextPath}/login?backUrl=${pageContext.request.contextPath}">点击登录</a>
     </shiro:guest>
 
     <shiro:authenticated>

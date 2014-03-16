@@ -21,14 +21,14 @@ public interface AuthorizationService {
     public List<Authorization> findAll();
 
     /**
-     * 根据用户名查找其角色
+     * 根据AppKey和用户名查找其角色
      * @param username
      * @return
      */
     public Set<String> findRoles(String appKey, String username);
 
     /**
-     * 根据用户名查找其权限
+     * 根据AppKey和用户名查找权限字符串
      * @param username
      * @return
      */

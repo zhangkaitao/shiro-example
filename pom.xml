@@ -38,6 +38,7 @@
         <module>shiro-example-chapter23-pom</module>
         <module>shiro-example-chapter23-app1</module>
         <module>shiro-example-chapter23-app2</module>
+        <module>shiro-example-chapter23-nginx</module>
     </modules>
 
 

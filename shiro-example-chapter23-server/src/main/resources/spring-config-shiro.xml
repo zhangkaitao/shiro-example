@@ -92,11 +92,10 @@
     </bean>
 
     <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+    <bean id="formAuthenticationFilter" class="com.github.zhangkaitao.shiro.chapter23.web.shiro.filter.ServerFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
-        <property name="loginUrl" value="/login"/>
     </bean>
 
     <bean id="sysUserFilter" class="com.github.zhangkaitao.shiro.chapter23.web.shiro.filter.SysUserFilter"/>

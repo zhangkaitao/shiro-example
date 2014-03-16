@@ -19,5 +19,10 @@ public interface AppService {
     public App findOne(Long appId);
     public List<App> findAll();
 
+    /**
+     * 根据appKey查找AppId
+     * @param appKey
+     * @return
+     */
     public Long findAppIdByAppKey(String appKey);
 }
