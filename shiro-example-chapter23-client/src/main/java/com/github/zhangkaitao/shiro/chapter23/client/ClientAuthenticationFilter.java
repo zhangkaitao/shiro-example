@@ -49,9 +49,9 @@ public class ClientAuthenticationFilter extends AuthenticationFilter {
         backUrl.append("://");
         backUrl.append(domain);
         if("http".equalsIgnoreCase(scheme) && port != 80) {
-            backUrl.append(String.valueOf(port));
+            backUrl.append(":").append(String.valueOf(port));
         } else if("https".equalsIgnoreCase(scheme) && port != 443) {
-            backUrl.append(String.valueOf(port));
+            backUrl.append(":").append(String.valueOf(port));
         }
         backUrl.append(contextPath);
         backUrl.append(getSuccessUrl());

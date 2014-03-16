@@ -62,9 +62,9 @@ public class ClientSavedRequest extends SavedRequest {
         requestUrl.append(domain);//5
         //6
         if("http".equalsIgnoreCase(scheme) && port != 80) {
-            requestUrl.append(String.valueOf(port));
+            requestUrl.append(":").append(String.valueOf(port));
         } else if("https".equalsIgnoreCase(scheme) && port != 443) {
-            requestUrl.append(String.valueOf(port));
+            requestUrl.append(":").append(String.valueOf(port));
         }
         //7
         requestUrl.append(requestURI);
