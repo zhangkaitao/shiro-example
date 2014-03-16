@@ -39,6 +39,7 @@
         <module>shiro-example-chapter23-app1</module>
         <module>shiro-example-chapter23-app2</module>
         <module>shiro-example-chapter23-nginx</module>
+        <module>shiro-example-chapter24</module>
     </modules>
 
 

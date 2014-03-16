@@ -1,0 +1,28 @@
+.table {
+    width:80%;
+    font:14px;
+    color:#333333;
+    text-align:center;
+    border-collapse:collapse;
+    table-layout: fixed;
+}
+.table td,.table th{
+    border:1px solid #333333;
+    padding: 10px;
+}
+
+.message {
+    background: #eee;
+    border: 1px solid #eee;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.form-group label {
+    width: 130px;
+    float: left;
+}
