@@ -1,6 +1,6 @@
-drop table if exists users;
-drop table if exists user_roles;
-drop table if exists roles_permissions;
+drop database if exists shiro;
+create database shiro;
+use shiro;
 
 create table users (
   id bigint auto_increment,
@@ -26,3 +26,5 @@ create table roles_permissions(
   constraint pk_roles_permissions primary key(id)
 ) charset=utf8 ENGINE=InnoDB;
 create unique index idx_roles_permissions on roles_permissions(role_name, permission);
+
+insert into users(username,password)values('zhang','123');
