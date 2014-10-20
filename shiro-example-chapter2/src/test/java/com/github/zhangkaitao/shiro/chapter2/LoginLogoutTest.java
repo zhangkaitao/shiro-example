@@ -44,6 +44,7 @@ public class LoginLogoutTest {
             subject.login(token);
         } catch (AuthenticationException e) {
             //5、身份验证失败
+            e.printStackTrace();
         }
 
         Assert.assertEquals(true, subject.isAuthenticated()); //断言用户已经登录
