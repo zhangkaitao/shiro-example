@@ -24,6 +24,7 @@
 %>
             <jsp:doBody/>
 <%
+        return;
         }
     }
 %>
