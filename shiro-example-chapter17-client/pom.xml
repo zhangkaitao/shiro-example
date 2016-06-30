@@ -161,6 +161,7 @@
                 <configuration>
                     <path>/${project.build.finalName}</path>
                     <httpPort>9080</httpPort>
+                     <port>9080</port>
                 </configuration>
 
             </plugin>
