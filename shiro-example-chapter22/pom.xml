@@ -124,19 +124,8 @@
         <!-- jcaptcha 验证码 -->
         <dependency>
             <groupId>com.octo.captcha</groupId>
-            <artifactId>jcaptcha</artifactId>
-            <version>2.0-alpha-1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.octo.captcha</groupId>
-            <artifactId>jcaptcha-integration-simple-servlet</artifactId>
-            <version>2.0-alpha-1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>servlet-api</artifactId>
-                    <groupId>javax.servlet</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>jcaptcha-all</artifactId>
+            <version>1.0-RC6</version>
         </dependency>
 
     </dependencies>
