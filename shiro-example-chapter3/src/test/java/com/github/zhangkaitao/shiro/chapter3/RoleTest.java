@@ -27,7 +27,7 @@ public class RoleTest extends BaseTest {
         Assert.assertEquals(false, result[2]);
     }
 
-    @Test(expected = UnauthorizedException.class)
+    @Test
     public void testCheckRole() {
         login("classpath:shiro-role.ini", "zhang", "123");
         //断言拥有角色：role1

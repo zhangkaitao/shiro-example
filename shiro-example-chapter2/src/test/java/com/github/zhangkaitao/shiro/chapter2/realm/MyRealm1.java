@@ -12,28 +12,25 @@ import java.util.List;
  */
 public class MyRealm1 implements Realm {
 
-    @Override
     public String getName() {
         return "myrealm1";
     }
 
-    @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof UsernamePasswordToken; //仅支持UsernamePasswordToken类型的Token
+        return token instanceof UsernamePasswordToken; //浠呮敮鎸乁sernamePasswordToken绫诲瀷鐨凾oken
     }
 
-    @Override
     public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-        String username = (String)token.getPrincipal();  //得到用户名
-        String password = new String((char[])token.getCredentials()); //得到密码
+        String username = (String)token.getPrincipal();  //寰楀埌鐢ㄦ埛鍚�
+        String password = new String((char[])token.getCredentials()); //寰楀埌瀵嗙爜
         if(!"zhang".equals(username)) {
-            throw new UnknownAccountException(); //如果用户名错误
+            throw new UnknownAccountException(); //濡傛灉鐢ㄦ埛鍚嶉敊璇�
         }
         if(!"123".equals(password)) {
-            throw new IncorrectCredentialsException(); //如果密码错误
+            throw new IncorrectCredentialsException(); //濡傛灉瀵嗙爜閿欒
         }
-        //如果身份认证验证成功，返回一个AuthenticationInfo实现；
+        //濡傛灉韬唤璁よ瘉楠岃瘉鎴愬姛锛岃繑鍥炰竴涓狝uthenticationInfo瀹炵幇锛�
         return new SimpleAuthenticationInfo(username, password, getName());
     }
 }

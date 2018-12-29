@@ -48,7 +48,7 @@ public class PermissionTest extends BaseTest {
     @Test
     public void testWildcardPermission2() {
         login("classpath:shiro-permission.ini", "li", "123");
-        subject().checkPermissions("system:user:create,delete,update:view");
+        subject().checkPermissions("system:user:create,delete,update,view");
 
         subject().checkPermissions("system:user:*");
         subject().checkPermissions("system:user");
